@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Download stats · PDF Lecture Reader</title>
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="img/favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon-64.png" type="image/png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="stats">
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="img/favicon-64.png" alt="" width="32" height="32">PDF Lecture Reader</a>
+    <nav aria-label="Main">
+      <a href="/#features">Features</a>
+      <a href="/#faq">Help</a>
+      <a href="/stats" aria-current="page">Downloads</a>
+      <a href="/license">License</a>
+    </nav>
+  </div>
+</header>
+<main class="page"><div class="wrap">
+<p class="eyebrow">Downloads</p>
+<h1>Download stats</h1>
+<p class="intro">Counted when the whole installer has been downloaded. Cancelled downloads and repeat clicks within a few seconds are not counted. Days are in India time.</p>
+<div class="tiles">
+  <div class="tile"><span>All time</span><b id="t-total">–</b></div>
+  <div class="tile"><span>Last 7 days</span><b id="t-week">–</b></div>
+  <div class="tile"><span>Today</span><b id="t-today">–</b></div>
+</div>
+<h2>Last 30 days</h2>
+<div class="chart" id="chart"><p class="empty">Loading…</p></div>
+<table class="table"><thead><tr><th>Version</th><th>Downloads</th></tr></thead><tbody id="byversion"><tr><td colspan="2" class="empty">Loading…</td></tr></tbody></table>
+</div></main>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Rohit Mal</span>
+    <a href="/license">License</a>
+    <a href="/THIRD-PARTY-NOTICES.txt">Third-party notices</a>
+    <a href="/stats">Download stats</a>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

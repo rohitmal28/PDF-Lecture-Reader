@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PDF Lecture Reader</title>
+<meta name="description" content="Free Windows app that reads any PDF aloud like a teacher, with natural pauses, word-by-word highlighting on the page and click-to-read. Works offline.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="img/favicon.ico" sizes="any">
+<link rel="icon" href="img/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:title" content="PDF Lecture Reader">
+<meta property="og:description" content="Any PDF, read aloud like a teacher. Free for Windows.">
+<meta property="og:image" content="img/icon-256.png">
+<link rel="preload" href="fonts/bricolage-grotesque-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="img/favicon-64.png" alt="" width="32" height="32">PDF Lecture Reader</a>
+    <nav aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#pacing">Pacing</a>
+      <a href="#faq">Help</a>
+      <a href="/stats">Downloads</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Free for Windows</p>
+      <h1 id="headline" aria-label="Any PDF, read aloud like a teacher.">Any PDF, read aloud like a teacher.</h1>
+      <p class="lede">Open your notes, a textbook chapter or a research paper. PDF Lecture Reader reads it out with natural pauses, highlights every word on the page as it speaks, and starts from any word you click.</p>
+    </div>
+
+    <div class="dl" id="download">
+      <a class="btn btn-primary" id="dlbtn" href="/download/windows">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+        Download for Windows
+      </a>
+      <div class="meta">
+        <span>Version <b data-f="version">1.0.0</b></span>
+        <span data-f="size">78 MB</span>
+        <span>Released <span data-f="released">29/10/2026</span></span>
+        <span>Windows 10 and 11, 64-bit</span>
+      </div>
+      <div class="counter" aria-live="polite">
+        <b id="count" class="num">–</b><span id="countlabel">downloads so far</span>
+      </div>
+      <p class="free">Free. No account. No ads. Your PDFs never leave your computer.</p>
+      <div class="thanks" id="thanks" hidden>
+        <strong>Your download is starting.</strong>
+        Next:
+        <ol>
+          <li>Open <b>PDF-Lecture-Reader-Setup-1.0.0.exe</b> from your Downloads.</li>
+          <li>If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</li>
+          <li>Accept the license agreement and follow the steps.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="shot" aria-label="Screenshot">
+  <div class="wrap">
+    <div class="window">
+      <div class="bar"><img src="img/favicon-64.png" alt="" width="16" height="16"><span>PDF Lecture Reader</span><span aria-hidden="true">— ▢ ✕</span></div>
+      <picture>
+        <source srcset="img/app-dark.webp" media="(prefers-color-scheme: dark)">
+        <img src="img/app-light.webp" width="1439" height="872" alt="PDF Lecture Reader reading a PDF about rainbows. The current sentence is highlighted in yellow on the PDF page on the left, the spoken word 'slows' is marked in orange, and the transcript of the section is on the right." loading="eager">
+      </picture>
+    </div>
+    <p class="caption">The PDF on the left, the transcript on the right. Yellow is the sentence being read; orange is the word being spoken.</p>
+  </div>
+</section>
+
+<section class="band alt" id="features">
+  <div class="wrap">
+    <h2>Made for studying, not just listening</h2>
+    <p class="intro">Most text-to-speech reads a page like a robot reading a receipt. PDF Lecture Reader paces itself the way a good teacher does, and keeps your eyes on the page.</p>
+    <div class="features">
+      <div class="feature"><h3><i></i>Teacher-style pauses</h3><p>A short pause after each sentence, a longer one between paragraphs, and a proper break before every new section. Labels like "Key idea:" get their own beat.</p></div>
+      <div class="feature"><h3><i></i>Word-by-word highlighting</h3><p>The sentence being read lights up on the real PDF page, and the word being spoken is marked as the voice says it. The page scrolls along on its own.</p></div>
+      <div class="feature"><h3><i></i>Click any word to jump</h3><p>Click a word on the PDF, or a sentence in the transcript, and reading carries on from exactly there. No hunting for a seek bar.</p></div>
+      <div class="feature"><h3><i></i>Sections from your headings</h3><p>Chapters and headings become a section list, so you can go straight to "3.2 Gradient descent" and back again.</p></div>
+      <div class="feature"><h3><i></i>Reads like a person would</h3><p>Skips page numbers, headers and contents-page dots. Says <code>→</code> as "to", <code>×</code> as "times", and reads <code>29/10/2026</code> as "29 October 2026".</p></div>
+      <div class="feature"><h3><i></i>Private and offline</h3><p>Everything happens on your computer. No sign-in, no uploads, no tracking. It remembers where you stopped in each document.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="pacing">
+  <div class="wrap">
+    <h2>Pick the pace that suits the material</h2>
+    <p class="intro">Speed changes how fast the voice talks. Pace changes how long it waits between ideas. Use Slow and clear when you are taking notes.</p>
+    <div class="pace" role="list">
+      <div class="row" role="listitem">
+        <div class="name">Brisk<small>0.23 s · 0.45 s · 0.68 s</small></div>
+        <div class="track" aria-label="Pauses of 0.23 seconds between sentences, 0.45 between paragraphs, 0.68 before a new section">
+          <span class="said" style="width:13%"></span><span class="gap" style="width:1.7%"></span><span class="said" style="width:13%"></span><span class="gap" style="width:3.3%"></span><span class="said" style="width:13%"></span><span class="gap" style="width:4.9%"></span><span class="said" style="width:13%"></span>
+        </div>
+      </div>
+      <div class="row" role="listitem">
+        <div class="name">Teacher<small>0.65 s · 1.3 s · 1.95 s</small></div>
+        <div class="track" aria-label="Pauses of 0.65 seconds between sentences, 1.3 between paragraphs, 1.95 before a new section">
+          <span class="said" style="width:13%"></span><span class="gap" style="width:4.7%"></span><span class="said" style="width:13%"></span><span class="gap" style="width:9.4%"></span><span class="said" style="width:13%"></span><span class="gap" style="width:14.1%"></span><span class="said" style="width:13%"></span>
+        </div>
+      </div>
+      <div class="row" role="listitem">
+        <div class="name">Slow and clear<small>1.1 s · 2.2 s · 3.3 s</small></div>
+        <div class="track" aria-label="Pauses of 1.1 seconds between sentences, 2.2 between paragraphs, 3.3 before a new section">
+          <span class="said" style="width:13%"></span><span class="gap" style="width:8%"></span><span class="said" style="width:13%"></span><span class="gap" style="width:16%"></span><span class="said" style="width:13%"></span><span class="gap" style="width:24%"></span><span class="said" style="width:13%"></span>
+        </div>
+      </div>
+      <div class="legend"><span><i class="k1"></i>Speaking</span><span><i class="k2"></i>Pause: after a sentence, after a paragraph, before a new section</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt">
+  <div class="wrap">
+    <h2>Up and reading in a minute</h2>
+    <p class="intro">A normal Windows installer, with a license agreement, a choice of folder, shortcuts and a proper uninstaller.</p>
+    <ol class="steps">
+      <li><h3>Download</h3><p>Get the installer from this page. It is about 78 MB.</p></li>
+      <li><h3>Install</h3><p>Run it, accept the license, and choose whether to install just for you or for everyone on the computer.</p></li>
+      <li><h3>Open a PDF and press Play</h3><p>Choose a PDF, drag one in, or right-click any PDF in File Explorer and pick "Read aloud with PDF Lecture Reader".</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="band" id="details">
+  <div class="wrap">
+    <h2>Details</h2>
+    <div class="facts">
+      <dl>
+        <div class="item"><dt>Version</dt><dd data-f="version">1.0.0</dd></div>
+        <div class="item"><dt>Released</dt><dd data-f="released">29/10/2026</dd></div>
+        <div class="item"><dt>Download size</dt><dd data-f="size">78 MB</dd></div>
+        <div class="item"><dt>Needs</dt><dd>Windows 10 or 11, 64-bit, about 300 MB free space</dd></div>
+        <div class="item"><dt>Works with</dt><dd>PDFs with selectable text. Scans can be viewed but not read aloud.</dd></div>
+        <div class="item"><dt>Price</dt><dd>Free for personal, study and work use</dd></div>
+      </dl>
+      <dl>
+        <div class="item"><dt>What's new</dt><dd><ul class="notes" id="notes"><li>First release.</li></ul></dd></div>
+        <div class="item"><dt>SHA-256</dt><dd><div class="hash"><code id="sha">Loading…</code><button class="copy" id="copysha" type="button">Copy</button></div></dd></div>
+        <div class="item"><dt>License</dt><dd><a href="/license">End user license agreement</a> · <a href="/THIRD-PARTY-NOTICES.txt">Third-party notices</a></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="faq">
+  <div class="wrap">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Windows says "Windows protected your PC". Is it safe?</summary>
+        <div><p>That message appears for apps that are not yet signed with a paid code-signing certificate. Click <b>More info</b>, then <b>Run anyway</b>.</p>
+        <p>Only do this for an installer you downloaded from this website. To check your copy is the original, compare its SHA-256 (in the Details section above) with the one Windows shows when you run <kbd>certutil -hashfile PDF-Lecture-Reader-Setup-1.0.0.exe SHA256</kbd> in Command Prompt.</p></div>
+      </details>
+      <details>
+        <summary>Is it really free?</summary>
+        <div><p>Yes. There is no trial, no account and no ads. The <a href="/license">license agreement</a> covers personal, study and work use.</p></div>
+      </details>
+      <details>
+        <summary>Are my PDFs uploaded anywhere?</summary>
+        <div><p>No. Documents are opened, read and spoken entirely on your computer. The app works with the internet switched off. It keeps copies of up to 8 recent PDFs in your Windows profile so it can reopen them where you stopped, and you can remove any of them from the start screen.</p></div>
+      </details>
+      <details>
+        <summary>Which voice does it use? Can I get an Indian English voice?</summary>
+        <div><p>It uses the voices installed in Windows. To add one, open <b>Settings → Time &amp; language → Speech → Add voices</b> and choose <b>English (India)</b>. Restart the app and pick it from the Voice list.</p></div>
+      </details>
+      <details>
+        <summary>My PDF says it has no selectable text.</summary>
+        <div><p>The PDF is a scan, a picture of text. Make a text-searchable copy with an OCR tool (many scanner apps can export one), then open that copy.</p></div>
+      </details>
+      <details>
+        <summary>How do I uninstall it?</summary>
+        <div><p><b>Settings → Apps → Installed apps → PDF Lecture Reader → Uninstall</b>. Your own PDF files are never touched. The uninstaller also offers to delete the app's saved settings and recent documents.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="band cta">
+  <div class="wrap">
+    <h2>Turn your next chapter into a lecture</h2>
+    <a class="btn btn-primary" href="/download/windows" data-dl>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+      Download for Windows
+    </a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Rohit Mal</span>
+    <a href="/license">License</a>
+    <a href="/THIRD-PARTY-NOTICES.txt">Third-party notices</a>
+    <a href="/stats">Download stats</a>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>

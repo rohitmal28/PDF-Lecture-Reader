@@ -1,0 +1,16 @@
+[
+  {
+    "version": "1.0.0",
+    "file": "PDF-Lecture-Reader-Setup-1.0.0.exe",
+    "platform": "Windows 10 and 11, 64-bit",
+    "released": "2026-10-29",
+    "notes": [
+      "First release.",
+      "Teacher-style pacing with adjustable pauses.",
+      "Sentence and word highlighting on the PDF page.",
+      "Click any word on the PDF to read from there.",
+      "Automatic sections from the PDF's headings.",
+      "Dates read day first (29/10/2026 is read as 29 October 2026)."
+    ]
+  }
+]
