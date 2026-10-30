@@ -1,0 +1,49 @@
+PDF LECTURE READER
+END USER LICENSE AGREEMENT
+
+Version 1.0 — 29/10/2026
+
+Please read this agreement carefully before installing or using PDF Lecture Reader ("the Software"). By clicking "I Agree", or by installing or using the Software, you agree to these terms. If you do not agree, click "Cancel" and do not install the Software.
+
+1. WHO THIS AGREEMENT IS WITH
+This agreement is between you and Rohit Mal ("the Author"), who owns the Software.
+
+2. LICENSE GRANT
+The Author grants you a free, personal, non-exclusive, non-transferable licence to install and use the Software on computers that you own or control, for personal, study and work purposes.
+
+3. WHAT YOU MAY NOT DO
+You may not:
+ a) sell, rent, lease or sublicense the Software, or distribute it as part of a paid product, without the Author's written permission;
+ b) remove or change any copyright, licence or attribution notices in the Software;
+ c) use the Software to break the law, including copyright law, for example by reading aloud documents you have no right to use.
+
+4. YOUR DOCUMENTS AND PRIVACY
+The Software opens, reads and speaks your PDF files entirely on your computer. It does not upload your documents, collect personal data, track usage, or send any information to the Author.
+To remember your place and your recent documents, the Software keeps a copy of recently opened PDFs and your settings in your Windows user profile. You can remove any recent document from the start screen at any time.
+Spoken audio is produced by the text-to-speech voices installed in Windows. Those voices are provided by Microsoft or other vendors under their own terms.
+
+5. OWNERSHIP
+The Software is licensed, not sold. The Author keeps all rights, title and interest in the Software, except for the third-party components listed in section 6.
+
+6. THIRD-PARTY COMPONENTS
+The Software includes open-source components that are licensed under their own terms, including Electron (MIT licence), Chromium (BSD-style and other licences), PDF.js by Mozilla (Apache License 2.0), and the fonts Atkinson Hyperlegible, Bricolage Grotesque and JetBrains Mono (SIL Open Font License 1.1). Their licences are listed in THIRD-PARTY-NOTICES.txt in the installation folder. Nothing in this agreement limits your rights under those licences.
+
+7. UPDATES
+The Author may release new versions. New versions may come with an updated agreement, which you will be asked to accept when you install them.
+
+8. NO WARRANTY
+The Software is provided "as is", without warranty of any kind, express or implied, including warranties of merchantability, fitness for a particular purpose and non-infringement. The Author does not promise that the Software will be error-free, that it will read every PDF correctly, or that its pronunciation, sections or highlighting will always be accurate. Always check important information against the original document.
+
+9. LIMITATION OF LIABILITY
+To the fullest extent permitted by law, the Author is not liable for any indirect, incidental, special or consequential damages, or for any loss of data, profits or study time, arising from the use of or inability to use the Software, even if advised of the possibility of such damages.
+
+10. TERMINATION
+This licence ends automatically if you break these terms. You can end it at any time by uninstalling the Software. Sections 5, 8, 9 and 11 continue after termination.
+
+11. GOVERNING LAW
+This agreement is governed by the laws of India. The courts of India have jurisdiction over any dispute arising from it.
+
+12. CONTACT
+Questions about this agreement can be sent to the Author, Rohit Mal.
+
+© 2026 Rohit Mal. All rights reserved.

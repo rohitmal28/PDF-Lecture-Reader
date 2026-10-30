@@ -1,0 +1,50 @@
+{
+  "name": "pdf-lecture-reader",
+  "productName": "PDF Lecture Reader",
+  "version": "1.0.0",
+  "description": "Reads any PDF aloud like a teacher, highlighting each word on the page.",
+  "author": "Rohit Mal",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "main": "app/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist:mac": "electron-builder --mac --universal --publish never"
+  },
+  "devDependencies": {
+    "electron": "33.4.11",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "com.rohitmal.pdflecturereader",
+    "productName": "PDF Lecture Reader",
+    "copyright": "© 2026 Rohit Mal",
+    "directories": { "buildResources": "build", "output": "dist" },
+    "files": ["app/**/*", "package.json"],
+    "extraResources": [
+      { "from": "resources/LICENSE.txt", "to": "LICENSE.txt" },
+      { "from": "resources/THIRD-PARTY-NOTICES.txt", "to": "THIRD-PARTY-NOTICES.txt" }
+    ],
+    "afterPack": "build/adhoc-sign.js",
+    "mac": {
+      "category": "public.app-category.education",
+      "icon": "build/icon.png",
+      "identity": null,
+      "hardenedRuntime": false,
+      "minimumSystemVersion": "11.0",
+      "target": [{ "target": "dmg", "arch": ["universal"] }],
+      "artifactName": "PDF-Lecture-Reader-${version}-mac.${ext}",
+      "fileAssociations": [
+        { "ext": "pdf", "name": "PDF document", "role": "Viewer", "rank": "Alternate", "isPackage": false }
+      ]
+    },
+    "dmg": {
+      "title": "PDF Lecture Reader ${version}",
+      "contents": [
+        { "x": 150, "y": 190, "type": "file" },
+        { "x": 390, "y": 190, "type": "link", "path": "/Applications" }
+      ],
+      "window": { "width": 540, "height": 380 }
+    }
+  }
+}

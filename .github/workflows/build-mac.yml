@@ -1,0 +1,53 @@
+name: Build Mac app
+
+# Builds the macOS version of PDF Lecture Reader on a GitHub-hosted Mac.
+# Run it from the Actions tab ("Run workflow"), or push a tag like v1.0.0.
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  mac:
+    runs-on: macos-14
+    defaults:
+      run:
+        working-directory: desktop
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - run: npm ci
+
+      - name: Build universal DMG (Apple Silicon + Intel)
+        run: npm run dist:mac
+
+      - name: Check the app
+        run: |
+          APP="dist/mac-universal/PDF Lecture Reader.app"
+          codesign --verify --deep --strict --verbose=2 "$APP"
+          lipo -archs "$APP/Contents/MacOS/PDF Lecture Reader"
+          ls -lh dist/*.dmg
+          shasum -a 256 dist/*.dmg
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PDF-Lecture-Reader-mac
+          path: desktop/dist/*.dmg
+          if-no-files-found: error
+
+      - name: Attach to GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: desktop/dist/*.dmg
