@@ -30,6 +30,7 @@
   --ok:#5fd39a; color-scheme:dark}
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.65}
 img{max-width:100%;height:auto;display:block}
@@ -45,7 +46,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 .brand img{width:32px;height:32px}
 .top nav{display:flex;gap:18px;flex-wrap:wrap}
 .top nav a{color:var(--muted);text-decoration:none;font-size:.95rem}
+.top nav{align-items:center}
 .top nav a:hover,.top nav a[aria-current="page"]{color:var(--fg)}
+.top nav a.navdl{color:var(--accent-fg);background:var(--accent);font-weight:700;padding:5px 14px;border-radius:8px}
+.top nav a.navdl:hover{color:var(--accent-fg);filter:brightness(1.06)}
 
 /* hero */
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;align-items:center;padding-block:64px 40px}
@@ -63,6 +67,14 @@ h1 .w.on{background:var(--mark-soft);box-shadow:0 .09em 0 var(--mark)}
 .btn-secondary:hover{border-color:var(--accent)}
 .btn[aria-disabled="true"]{opacity:.55;pointer-events:none}
 .dlbtns{display:flex;flex-direction:column;gap:10px}
+.dlbtns.row{flex-direction:row;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.mobile-note{border-radius:10px;background:var(--mark-soft);border:1px solid var(--mark);padding:14px 16px;font-size:.95rem}
+.mobile-note strong{display:block;margin-bottom:2px}
+.mobile-note .copy{display:block;margin-top:10px;font-size:.9rem;padding:6px 12px}
+.ostabs{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:10px;background:var(--bg);margin:6px 0 30px}
+.ostabs button{font:inherit;font-weight:700;font-size:.95rem;border:0;background:transparent;color:var(--muted);padding:7px 18px;border-radius:7px;cursor:pointer}
+.ostabs button[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px #0000001f}
+.cta .free{margin-top:14px}
 .btn svg{width:20px;height:20px;flex:none}
 .meta{font-family:var(--mono);font-size:.78rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 14px}
 .counter{display:flex;align-items:baseline;gap:10px;border-top:1px solid var(--line);padding-top:14px}
@@ -138,7 +150,6 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,3.4vw,2.3re
 
 /* cta + footer */
 .cta{text-align:center}
-.cta .btn{margin-top:18px}
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
 footer .wrap{display:flex;gap:10px 24px;flex-wrap:wrap;padding-block:28px}
 footer a{color:var(--muted)}

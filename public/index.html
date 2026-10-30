@@ -23,8 +23,9 @@
     <nav aria-label="Main">
       <a href="#features">Features</a>
       <a href="#pacing">Pacing</a>
+      <a href="#install">Install</a>
       <a href="#faq">Help</a>
-      <a href="/stats">Downloads</a>
+      <a class="navdl" href="#download">Download</a>
     </nav>
   </div>
 </header>
@@ -39,6 +40,11 @@
     </div>
 
     <div class="dl" id="download">
+      <div class="mobile-note" id="mobilenote" hidden>
+        <strong>This app is for computers.</strong>
+        PDF Lecture Reader runs on Windows PCs and Macs. Open this page on your computer to download it.
+        <button class="copy" id="copylink" type="button">Copy link to this page</button>
+      </div>
       <div class="dlbtns" id="dlbtns">
         <a class="btn btn-primary" id="dlbtn" data-os="windows" href="/download/windows">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
@@ -55,7 +61,7 @@
         <span>Released <span data-f="released">29/10/2026</span></span>
         <span data-f="platform">Windows 10 and 11, 64-bit</span>
       </div>
-      <div class="counter" aria-live="polite">
+      <div class="counter" id="counter" data-min="50" aria-live="polite" hidden>
         <b id="count" class="num">–</b><span id="countlabel">downloads so far</span>
       </div>
       <p class="free">Free. No account. No ads. Your PDFs never leave your computer.</p>
@@ -137,14 +143,22 @@
   </div>
 </section>
 
-<section class="band alt">
+<section class="band alt" id="install">
   <div class="wrap">
     <h2>Up and reading in a minute</h2>
-    <p class="intro">A normal Windows installer, with a license agreement, a choice of folder, shortcuts and a proper uninstaller. On a Mac, a disk image you drag to Applications.</p>
-    <ol class="steps">
-      <li><h3>Download</h3><p>Get it from this page: about 78 MB for Windows, 173 MB for Mac.</p></li>
-      <li><h3>Install</h3><p>On Windows, run it, accept the license, and choose whether to install just for you or for everyone. On a Mac, drag it to Applications.</p></li>
-      <li><h3>Open a PDF and press Play</h3><p>Choose a PDF or drag one in. Or right-click a PDF: "Read aloud with PDF Lecture Reader" in File Explorer, "Open With" in Finder.</p></li>
+    <div class="ostabs" role="tablist" aria-label="Install steps for">
+      <button type="button" role="tab" id="tab-windows" aria-controls="steps-windows" aria-selected="true">Windows</button>
+      <button type="button" role="tab" id="tab-mac" aria-controls="steps-mac" aria-selected="false">Mac</button>
+    </div>
+    <ol class="steps" id="steps-windows" role="tabpanel" aria-labelledby="tab-windows">
+      <li><h3>Download</h3><p>Click <b>Download for Windows</b>. The installer is about 78 MB.</p></li>
+      <li><h3>Install</h3><p>Open it from your Downloads. If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>. Accept the license and click Install.</p></li>
+      <li><h3>Open a PDF and press Play</h3><p>Choose a PDF or drag one in. You can also right-click any PDF in File Explorer and pick <b>Read aloud with PDF Lecture Reader</b>.</p></li>
+    </ol>
+    <ol class="steps" id="steps-mac" role="tabpanel" aria-labelledby="tab-mac" hidden>
+      <li><h3>Download</h3><p>Click <b>Download for Mac</b>. The disk image is about 173 MB and works on Apple Silicon and Intel Macs.</p></li>
+      <li><h3>Install</h3><p>Open it and drag <b>PDF Lecture Reader</b> onto <b>Applications</b>. The first time you open it, click <b>Done</b>, then <b>System Settings → Privacy &amp; Security → Open Anyway</b>.</p></li>
+      <li><h3>Open a PDF and press Play</h3><p>Choose a PDF or drag one in. You can also right-click any PDF in Finder and pick <b>Open With → PDF Lecture Reader</b>.</p></li>
     </ol>
   </div>
 </section>
@@ -216,10 +230,17 @@
 <section class="band cta">
   <div class="wrap">
     <h2>Turn your next chapter into a lecture</h2>
-    <a class="btn btn-primary" href="/download/windows" data-dl data-os="windows">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
-      <span>Download for Windows</span>
-    </a>
+    <div class="dlbtns row">
+      <a class="btn btn-primary" href="/download/windows" data-dl data-os="windows">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+        <span>Download for Windows</span>
+      </a>
+      <a class="btn btn-secondary" href="/download/mac" data-dl data-os="mac">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+        <span>Download for Mac</span>
+      </a>
+    </div>
+    <p class="free">Free. No account. No ads.</p>
   </div>
 </section>
 </main>

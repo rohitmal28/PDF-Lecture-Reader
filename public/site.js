@@ -8,16 +8,33 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---- lead with the visitor's own system: Mac visitors get the Mac button first ---- */
 const isMac=/Mac/i.test((navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent)&&!(navigator.maxTouchPoints>1);
+const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(/Mac/i.test(navigator.platform||'')&&navigator.maxTouchPoints>1);
 const featured=isMac?'mac':'windows';
 const OSNAME={windows:'Windows',mac:'Mac'};
-if(isMac){
-  const box=document.getElementById('dlbtns');
-  if(box){
-    const [win,mac]=[box.querySelector('[data-os="windows"]'),box.querySelector('[data-os="mac"]')];
-    win.className='btn btn-secondary';win.removeAttribute('id');mac.className='btn btn-primary';mac.id='dlbtn';box.prepend(mac);
-  }
-  document.querySelectorAll('[data-dl]').forEach(a=>{a.dataset.os='mac';a.href='/download/mac';a.lastElementChild.textContent='Download for Mac'});
+if(isMac)document.querySelectorAll('.dlbtns').forEach(box=>{
+  const win=box.querySelector('[data-os="windows"]'),mac=box.querySelector('[data-os="mac"]');
+  if(!win||!mac)return;
+  win.className='btn btn-secondary';mac.className='btn btn-primary';box.prepend(mac);
+  if(win.id==='dlbtn'){win.removeAttribute('id');mac.id='dlbtn'}
+});
+
+/* ---- phones and tablets: the app needs a computer ---- */
+if(isMobile){
+  const note=$('#mobilenote');if(note)note.hidden=false;
+  const cl=$('#copylink');
+  if(cl)cl.addEventListener('click',async()=>{
+    const url=location.origin+'/';
+    try{if(navigator.share){await navigator.share({title:'PDF Lecture Reader',url})}else{await navigator.clipboard.writeText(url);cl.textContent='Link copied'}}
+    catch(e){cl.textContent=url}
+  });
 }
+
+/* ---- install steps: show the visitor's system, switch with the tabs ---- */
+function showSteps(os){
+  ['windows','mac'].forEach(o=>{const t=$('#tab-'+o),p=$('#steps-'+o);if(t)t.setAttribute('aria-selected',String(o===os));if(p)p.hidden=o!==os});
+}
+['windows','mac'].forEach(o=>{const t=$('#tab-'+o);if(t)t.addEventListener('click',()=>showSteps(o))});
+showSteps(featured);
 
 /* ---- headline: a reading highlight moves across the words, pausing like the app ---- */
 const h=$('#headline');
@@ -61,6 +78,8 @@ function fill(stats){
     $('#countlabel').textContent=stats.total===0?'downloads so far. Be the first.':stats.total===1?'download so far':'downloads so far';
     if(lastTotal!==null&&stats.total>lastTotal&&!reduced){c.animate([{color:'var(--mark-word)'},{color:'inherit'}],{duration:1200})}
     lastTotal=stats.total;
+    // the counter stays hidden until there is a real number worth showing
+    const box=$('#counter');if(box)box.hidden=stats.total<(+box.dataset.min||0);
   }
   document.querySelectorAll('a[data-os]').forEach(b=>{const x=by[b.dataset.os];if(x&&x.available===false){b.setAttribute('aria-disabled','true');b.lastElementChild.textContent=`${OSNAME[b.dataset.os]} download unavailable right now`}});
   if(document.body.dataset.page==='stats')drawStats(stats);

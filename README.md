@@ -35,6 +35,7 @@ Stop it with **Ctrl+C**, or by closing its window.
 - Resumed downloads (Range requests) and repeat clicks from the same address within 15 seconds are not counted again.
 - Counts are saved in `data/downloads.json` (with a `.bak` backup). Don't delete this folder, or the count starts from 0.
 - Days are counted in India time (UTC+05:30).
+- The home page hides the counter until there are 50 downloads. Change `data-min="50"` on the counter in `public/index.html` to change that. The stats page always shows the real numbers.
 
 ## Where the installer goes
 
