@@ -26,7 +26,7 @@ A Mac app has to be built on a Mac. You don't need one: GitHub builds it.
 3. After about 10 minutes, open the finished run and download **PDF-Lecture-Reader-mac** at the bottom.
    Inside is `PDF-Lecture-Reader-1.0.0-mac.dmg`.
 
-Pushing a tag such as `v1.0.0` runs the same build and attaches the DMG to a GitHub release.
+To publish it, attach the DMG to a release on the repository's **Releases** page, and put its size and sha256 in the website's `releases.json`.
 
 On a Mac you can also build it yourself: `npm ci && npm run dist:mac`.
 
