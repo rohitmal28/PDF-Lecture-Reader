@@ -1,5 +1,6 @@
 [
   {
+    "os": "windows",
     "version": "1.0.0",
     "file": "PDF-Lecture-Reader-Setup-1.0.0.exe",
     "platform": "Windows 10 and 11, 64-bit",
@@ -11,6 +12,21 @@
       "Click any word on the PDF to read from there.",
       "Automatic sections from the PDF's headings.",
       "Dates read day first (29/10/2026 is read as 29 October 2026)."
+    ]
+  },
+  {
+    "os": "mac",
+    "version": "1.0.0",
+    "file": "PDF-Lecture-Reader-1.0.0-mac.dmg",
+    "url": "https://github.com/rohitmal28/PDF-Lecture-Reader/releases/download/v1.0.0/PDF-Lecture-Reader-1.0.0-mac.dmg",
+    "size": 181418163,
+    "sha256": "be8d6c24d6fa0b0eb594d252dd0d4ad742e93b7ae2971f53d15b3d4f200479ee",
+    "platform": "macOS 11 or newer, Apple Silicon and Intel",
+    "released": "2026-10-30",
+    "notes": [
+      "First Mac release, with everything in the Windows version.",
+      "One download for Apple Silicon and Intel Macs.",
+      "Open PDFs from Finder with Open With, or drop them on the Dock icon."
     ]
   }
 ]

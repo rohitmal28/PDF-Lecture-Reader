@@ -19,8 +19,8 @@ You may not:
 
 4. YOUR DOCUMENTS AND PRIVACY
 The Software opens, reads and speaks your PDF files entirely on your computer. It does not upload your documents, collect personal data, track usage, or send any information to the Author.
-To remember your place and your recent documents, the Software keeps a copy of recently opened PDFs and your settings in your Windows user profile. You can remove any recent document from the start screen at any time.
-Spoken audio is produced by the text-to-speech voices installed in Windows. Those voices are provided by Microsoft or other vendors under their own terms.
+To remember your place and your recent documents, the Software keeps a copy of recently opened PDFs and your settings in your user account on this computer. You can remove any recent document from the start screen at any time.
+Spoken audio is produced by the text-to-speech voices installed in Windows or macOS. Those voices are provided by Microsoft, Apple or other vendors under their own terms.
 
 5. OWNERSHIP
 The Software is licensed, not sold. The Author keeps all rights, title and interest in the Software, except for the third-party components listed in section 6.

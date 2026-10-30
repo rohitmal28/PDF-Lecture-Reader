@@ -59,7 +59,10 @@ h1 .w.on{background:var(--mark-soft);box-shadow:0 .09em 0 var(--mark)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:inherit;font-weight:700;font-size:1.08rem;text-decoration:none;border-radius:10px;padding:14px 22px;border:1px solid transparent;cursor:pointer}
 .btn-primary{background:var(--accent);color:var(--accent-fg)}
 .btn-primary:hover{filter:brightness(1.06)}
-.btn-primary[aria-disabled="true"]{opacity:.55;pointer-events:none}
+.btn-secondary{background:transparent;color:var(--fg);border-color:var(--line);font-size:.98rem;padding:11px 18px}
+.btn-secondary:hover{border-color:var(--accent)}
+.btn[aria-disabled="true"]{opacity:.55;pointer-events:none}
+.dlbtns{display:flex;flex-direction:column;gap:10px}
 .btn svg{width:20px;height:20px;flex:none}
 .meta{font-family:var(--mono);font-size:.78rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 14px}
 .counter{display:flex;align-items:baseline;gap:10px;border-top:1px solid var(--line);padding-top:14px}

@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PDF Lecture Reader</title>
-<meta name="description" content="Free Windows app that reads any PDF aloud like a teacher, with natural pauses, word-by-word highlighting on the page and click-to-read. Works offline.">
+<meta name="description" content="Free app for Windows and Mac that reads any PDF aloud like a teacher, with natural pauses, word-by-word highlighting on the page and click-to-read. Works offline.">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="img/favicon.ico" sizes="any">
 <link rel="icon" href="img/favicon-64.png" type="image/png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta property="og:title" content="PDF Lecture Reader">
-<meta property="og:description" content="Any PDF, read aloud like a teacher. Free for Windows.">
+<meta property="og:description" content="Any PDF, read aloud like a teacher. Free for Windows and Mac.">
 <meta property="og:image" content="img/icon-256.png">
 <link rel="preload" href="fonts/bricolage-grotesque-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
@@ -33,33 +33,48 @@
 <section class="hero">
   <div class="wrap">
     <div>
-      <p class="eyebrow">Free for Windows</p>
+      <p class="eyebrow">Free for Windows and Mac</p>
       <h1 id="headline" aria-label="Any PDF, read aloud like a teacher.">Any PDF, read aloud like a teacher.</h1>
       <p class="lede">Open your notes, a textbook chapter or a research paper. PDF Lecture Reader reads it out with natural pauses, highlights every word on the page as it speaks, and starts from any word you click.</p>
     </div>
 
     <div class="dl" id="download">
-      <a class="btn btn-primary" id="dlbtn" href="/download/windows">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
-        Download for Windows
-      </a>
+      <div class="dlbtns" id="dlbtns">
+        <a class="btn btn-primary" id="dlbtn" data-os="windows" href="/download/windows">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+          <span>Download for Windows</span>
+        </a>
+        <a class="btn btn-secondary" data-os="mac" href="/download/mac">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+          <span>Download for Mac</span>
+        </a>
+      </div>
       <div class="meta">
         <span>Version <b data-f="version">1.0.0</b></span>
         <span data-f="size">78 MB</span>
         <span>Released <span data-f="released">29/10/2026</span></span>
-        <span>Windows 10 and 11, 64-bit</span>
+        <span data-f="platform">Windows 10 and 11, 64-bit</span>
       </div>
       <div class="counter" aria-live="polite">
         <b id="count" class="num">–</b><span id="countlabel">downloads so far</span>
       </div>
       <p class="free">Free. No account. No ads. Your PDFs never leave your computer.</p>
-      <div class="thanks" id="thanks" hidden>
+      <div class="thanks" id="thanks-windows" hidden>
         <strong>Your download is starting.</strong>
         Next:
         <ol>
           <li>Open <b>PDF-Lecture-Reader-Setup-1.0.0.exe</b> from your Downloads.</li>
           <li>If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</li>
           <li>Accept the license agreement and follow the steps.</li>
+        </ol>
+      </div>
+      <div class="thanks" id="thanks-mac" hidden>
+        <strong>Your download is starting.</strong>
+        Next:
+        <ol>
+          <li>Open <b>PDF-Lecture-Reader-1.0.0-mac.dmg</b> from your Downloads and drag <b>PDF Lecture Reader</b> onto <b>Applications</b>.</li>
+          <li>Open it from Applications. When macOS says it can't check the app, click <b>Done</b>.</li>
+          <li>Open <b>System Settings → Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b>. You only do this once.</li>
         </ol>
       </div>
     </div>
@@ -125,11 +140,11 @@
 <section class="band alt">
   <div class="wrap">
     <h2>Up and reading in a minute</h2>
-    <p class="intro">A normal Windows installer, with a license agreement, a choice of folder, shortcuts and a proper uninstaller.</p>
+    <p class="intro">A normal Windows installer, with a license agreement, a choice of folder, shortcuts and a proper uninstaller. On a Mac, a disk image you drag to Applications.</p>
     <ol class="steps">
-      <li><h3>Download</h3><p>Get the installer from this page. It is about 78 MB.</p></li>
-      <li><h3>Install</h3><p>Run it, accept the license, and choose whether to install just for you or for everyone on the computer.</p></li>
-      <li><h3>Open a PDF and press Play</h3><p>Choose a PDF, drag one in, or right-click any PDF in File Explorer and pick "Read aloud with PDF Lecture Reader".</p></li>
+      <li><h3>Download</h3><p>Get it from this page: about 78 MB for Windows, 173 MB for Mac.</p></li>
+      <li><h3>Install</h3><p>On Windows, run it, accept the license, and choose whether to install just for you or for everyone. On a Mac, drag it to Applications.</p></li>
+      <li><h3>Open a PDF and press Play</h3><p>Choose a PDF or drag one in. Or right-click a PDF: "Read aloud with PDF Lecture Reader" in File Explorer, "Open With" in Finder.</p></li>
     </ol>
   </div>
 </section>
@@ -140,15 +155,16 @@
     <div class="facts">
       <dl>
         <div class="item"><dt>Version</dt><dd data-f="version">1.0.0</dd></div>
-        <div class="item"><dt>Released</dt><dd data-f="released">29/10/2026</dd></div>
-        <div class="item"><dt>Download size</dt><dd data-f="size">78 MB</dd></div>
-        <div class="item"><dt>Needs</dt><dd>Windows 10 or 11, 64-bit, about 300 MB free space</dd></div>
+        <div class="item"><dt>Released</dt><dd>Windows <span data-f="released" data-os="windows">29/10/2026</span> · Mac <span data-f="released" data-os="mac">30/10/2026</span></dd></div>
+        <div class="item"><dt>Download size</dt><dd>Windows <span data-f="size" data-os="windows">78 MB</span> · Mac <span data-f="size" data-os="mac">173 MB</span></dd></div>
+        <div class="item"><dt>Needs</dt><dd>Windows 10 or 11, 64-bit, about 300 MB free space<br>or macOS 11 Big Sur or newer, Apple Silicon or Intel, about 450 MB free space</dd></div>
         <div class="item"><dt>Works with</dt><dd>PDFs with selectable text. Scans can be viewed but not read aloud.</dd></div>
         <div class="item"><dt>Price</dt><dd>Free for personal, study and work use</dd></div>
       </dl>
       <dl>
         <div class="item"><dt>What's new</dt><dd><ul class="notes" id="notes"><li>First release.</li></ul></dd></div>
-        <div class="item"><dt>SHA-256</dt><dd><div class="hash"><code id="sha">Loading…</code><button class="copy" id="copysha" type="button">Copy</button></div></dd></div>
+        <div class="item"><dt>SHA-256 Windows</dt><dd><div class="hash"><code data-f="sha256" data-os="windows">Loading…</code><button class="copy" type="button">Copy</button></div></dd></div>
+        <div class="item"><dt>SHA-256 Mac</dt><dd><div class="hash"><code data-f="sha256" data-os="mac">Loading…</code><button class="copy" type="button">Copy</button></div></dd></div>
         <div class="item"><dt>License</dt><dd><a href="/license">End user license agreement</a> · <a href="/THIRD-PARTY-NOTICES.txt">Third-party notices</a></dd></div>
       </dl>
     </div>
@@ -165,16 +181,24 @@
         <p>Only do this for an installer you downloaded from this website. To check your copy is the original, compare its SHA-256 (in the Details section above) with the one Windows shows when you run <kbd>certutil -hashfile PDF-Lecture-Reader-Setup-1.0.0.exe SHA256</kbd> in Command Prompt.</p></div>
       </details>
       <details>
+        <summary>My Mac says the app "can't be opened" or "could not be verified".</summary>
+        <div><p>macOS shows that for apps that are not yet signed with a paid Apple Developer ID. Click <b>Done</b>, then open <b>System Settings → Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b> next to PDF Lecture Reader. After that it opens normally.</p>
+        <p>Only do this for a copy you downloaded from this website. To check it is the original, run <kbd>shasum -a 256 ~/Downloads/PDF-Lecture-Reader-1.0.0-mac.dmg</kbd> in Terminal and compare it with the SHA-256 in the Details section above.</p></div>
+      </details>
+      <details>
         <summary>Is it really free?</summary>
         <div><p>Yes. There is no trial, no account and no ads. The <a href="/license">license agreement</a> covers personal, study and work use.</p></div>
       </details>
       <details>
         <summary>Are my PDFs uploaded anywhere?</summary>
-        <div><p>No. Documents are opened, read and spoken entirely on your computer. The app works with the internet switched off. It keeps copies of up to 8 recent PDFs in your Windows profile so it can reopen them where you stopped, and you can remove any of them from the start screen.</p></div>
+        <div><p>No. Documents are opened, read and spoken entirely on your computer. The app works with the internet switched off. It keeps copies of up to 8 recent PDFs in your user account so it can reopen them where you stopped, and you can remove any of them from the start screen.</p></div>
       </details>
       <details>
         <summary>Which voice does it use? Can I get an Indian English voice?</summary>
-        <div><p>It uses the voices installed in Windows. To add one, open <b>Settings → Time &amp; language → Speech → Add voices</b> and choose <b>English (India)</b>. Restart the app and pick it from the Voice list.</p></div>
+        <div><p>It uses the voices installed on your computer.</p>
+        <p><b>Windows:</b> open <b>Settings → Time &amp; language → Speech → Add voices</b> and choose <b>English (India)</b>.</p>
+        <p><b>Mac:</b> open <b>System Settings → Accessibility → Spoken Content → System voice → Manage Voices</b> and download an English (India) or "Enhanced" voice.</p>
+        <p>Restart the app and pick it from the Voice list.</p></div>
       </details>
       <details>
         <summary>My PDF says it has no selectable text.</summary>
@@ -182,7 +206,8 @@
       </details>
       <details>
         <summary>How do I uninstall it?</summary>
-        <div><p><b>Settings → Apps → Installed apps → PDF Lecture Reader → Uninstall</b>. Your own PDF files are never touched. The uninstaller also offers to delete the app's saved settings and recent documents.</p></div>
+        <div><p><b>Windows:</b> <b>Settings → Apps → Installed apps → PDF Lecture Reader → Uninstall</b>. Your own PDF files are never touched. The uninstaller also offers to delete the app's saved settings and recent documents.</p>
+        <p><b>Mac:</b> drag <b>PDF Lecture Reader</b> from Applications to the Bin. To remove its settings and recent documents too, delete the <b>PDF Lecture Reader</b> folder in <kbd>~/Library/Application Support</kbd>.</p></div>
       </details>
     </div>
   </div>
@@ -191,9 +216,9 @@
 <section class="band cta">
   <div class="wrap">
     <h2>Turn your next chapter into a lecture</h2>
-    <a class="btn btn-primary" href="/download/windows" data-dl>
+    <a class="btn btn-primary" href="/download/windows" data-dl data-os="windows">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
-      Download for Windows
+      <span>Download for Windows</span>
     </a>
   </div>
 </section>

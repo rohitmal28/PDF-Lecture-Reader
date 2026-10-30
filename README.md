@@ -21,8 +21,10 @@ Stop it with **Ctrl+C**, or by closing its window.
 | Address | What it is |
 |---|---|
 | `/` | Home page with the download button and live counter |
-| `/download/windows` | Downloads the latest installer (counted) |
-| `/download/1.0.0` | Downloads a specific version (counted) |
+| `/download/windows` | Downloads the latest Windows installer (counted) |
+| `/download/mac` | Downloads the latest Mac DMG (counted) |
+| `/download/1.0.0` | Downloads a specific Windows version (counted) |
+| `/download/mac/1.0.0` | Downloads a specific Mac version (counted) |
 | `/stats` | Download stats: all time, last 7 days, today, last 30 days |
 | `/license` | The end user license agreement |
 | `/api/stats` | The numbers as JSON |
@@ -43,15 +45,25 @@ The server looks for each installer listed in `releases.json` in:
 
 When you publish the site, copy the `.exe` into `downloads`.
 
+## The Mac download
+
+The Mac DMG (about 173 MB) is too big to commit to GitHub, which allows files up to 100 MB. Each Mac entry in `releases.json` has a `url` pointing at the file on the repository's **GitHub Releases** page, plus its `size` and `sha256`.
+
+- If the DMG is in `downloads` or the folder above, the site serves it itself, like the Windows installer.
+- If it isn't (the hosted site), `/download/mac` redirects to the GitHub Releases copy. Those downloads are counted when the redirect happens, since the site can't see when they finish.
+
+The DMG is built by GitHub Actions. See `desktop/README.md`.
+
 ## Releasing a new version
 
 1. Put the new installer, for example `PDF-Lecture-Reader-Setup-1.1.0.exe`, in `downloads`.
-2. Add it to the **top** of `releases.json` (the first available entry is "latest"):
+2. Add it to the **top** of `releases.json`. For each system (`"os"`: `"windows"` or `"mac"`), the first available entry is "latest":
    ```json
-   { "version": "1.1.0", "file": "PDF-Lecture-Reader-Setup-1.1.0.exe",
+   { "os": "windows", "version": "1.1.0", "file": "PDF-Lecture-Reader-Setup-1.1.0.exe",
      "platform": "Windows 10 and 11, 64-bit", "released": "2026-12-01",
      "notes": ["What changed"] }
    ```
+   For the Mac, also add `"url"`, `"size"` and `"sha256"` (see the existing Mac entry).
    Dates in this file are written YYYY-MM-DD. The site shows them as DD/MM/YYYY.
 3. Restart the server. Old versions stay downloadable at `/download/<version>`.
 

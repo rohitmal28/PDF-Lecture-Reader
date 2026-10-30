@@ -6,6 +6,19 @@ const ddmmyyyy=iso=>{const [y,m,d]=String(iso).split('-');return d&&m&&y?`${d}/$
 const mb=b=>b?(b/1048576).toFixed(1)+' MB':'';
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* ---- lead with the visitor's own system: Mac visitors get the Mac button first ---- */
+const isMac=/Mac/i.test((navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent)&&!(navigator.maxTouchPoints>1);
+const featured=isMac?'mac':'windows';
+const OSNAME={windows:'Windows',mac:'Mac'};
+if(isMac){
+  const box=document.getElementById('dlbtns');
+  if(box){
+    const [win,mac]=[box.querySelector('[data-os="windows"]'),box.querySelector('[data-os="mac"]')];
+    win.className='btn btn-secondary';win.removeAttribute('id');mac.className='btn btn-primary';mac.id='dlbtn';box.prepend(mac);
+  }
+  document.querySelectorAll('[data-dl]').forEach(a=>{a.dataset.os='mac';a.href='/download/mac';a.lastElementChild.textContent='Download for Mac'});
+}
+
 /* ---- headline: a reading highlight moves across the words, pausing like the app ---- */
 const h=$('#headline');
 if(h){
@@ -32,11 +45,15 @@ if(h){
 /* ---- live numbers ---- */
 let lastTotal=null;
 function fill(stats){
-  const r=stats.latest||{};
-  document.querySelectorAll('[data-f="version"]').forEach(e=>e.textContent=r.version||'');
-  document.querySelectorAll('[data-f="size"]').forEach(e=>e.textContent=mb(r.size)||e.textContent);
-  document.querySelectorAll('[data-f="released"]').forEach(e=>e.textContent=ddmmyyyy(r.released));
-  const sha=$('#sha');if(sha)sha.textContent=r.sha256||'Not available';
+  const by=stats.latestByOs||{windows:stats.latest};
+  const r=by[featured]||stats.latest||{};
+  // fields with data-os show that system's release; the rest show the visitor's own
+  const rel=e=>(e.dataset.os?by[e.dataset.os]:r)||{};
+  document.querySelectorAll('[data-f="version"]').forEach(e=>e.textContent=rel(e).version||e.textContent);
+  document.querySelectorAll('[data-f="size"]').forEach(e=>e.textContent=mb(rel(e).size)||e.textContent);
+  document.querySelectorAll('[data-f="released"]').forEach(e=>e.textContent=rel(e).released?ddmmyyyy(rel(e).released):e.textContent);
+  document.querySelectorAll('[data-f="platform"]').forEach(e=>e.textContent=rel(e).platform||e.textContent);
+  document.querySelectorAll('[data-f="sha256"]').forEach(e=>e.textContent=rel(e).sha256||'Not available');
   const notes=$('#notes');if(notes&&r.notes&&r.notes.length){notes.textContent='';r.notes.forEach(n=>{const li=document.createElement('li');li.textContent=n;notes.appendChild(li)})}
   const c=$('#count');
   if(c){
@@ -45,7 +62,7 @@ function fill(stats){
     if(lastTotal!==null&&stats.total>lastTotal&&!reduced){c.animate([{color:'var(--mark-word)'},{color:'inherit'}],{duration:1200})}
     lastTotal=stats.total;
   }
-  if(r.available===false){document.querySelectorAll('#dlbtn,[data-dl]').forEach(b=>{b.setAttribute('aria-disabled','true');b.lastChild.textContent=' Download unavailable right now'})}
+  document.querySelectorAll('a[data-os]').forEach(b=>{const x=by[b.dataset.os];if(x&&x.available===false){b.setAttribute('aria-disabled','true');b.lastElementChild.textContent=`${OSNAME[b.dataset.os]} download unavailable right now`}});
   if(document.body.dataset.page==='stats')drawStats(stats);
 }
 async function refresh(){
@@ -56,20 +73,19 @@ setInterval(()=>{if(!document.hidden)refresh()},20000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh()});
 
 /* ---- after clicking download: show next steps, refresh the counter ---- */
-document.querySelectorAll('#dlbtn,[data-dl]').forEach(a=>a.addEventListener('click',()=>{
-  const t=$('#thanks');if(t){t.hidden=false}
+document.querySelectorAll('a[data-os]').forEach(a=>a.addEventListener('click',()=>{
+  ['windows','mac'].forEach(o=>{const t=$('#thanks-'+o);if(t)t.hidden=o!==a.dataset.os});
   if(a.dataset.dl!==undefined){const d=$('#download');if(d)d.scrollIntoView({behavior:reduced?'auto':'smooth',block:'center'})}
   [3000,8000,20000,45000].forEach(ms=>setTimeout(refresh,ms));
 }));
 
-/* ---- copy checksum ---- */
-const cp=$('#copysha');
-if(cp)cp.addEventListener('click',async()=>{
-  const text=$('#sha').textContent;
-  try{await navigator.clipboard.writeText(text);cp.textContent='Copied'}
-  catch(e){const r=document.createRange();r.selectNodeContents($('#sha'));const s=getSelection();s.removeAllRanges();s.addRange(r);cp.textContent='Press Ctrl+C'}
+/* ---- copy checksums ---- */
+document.querySelectorAll('.hash .copy').forEach(cp=>cp.addEventListener('click',async()=>{
+  const code=cp.previousElementSibling;
+  try{await navigator.clipboard.writeText(code.textContent);cp.textContent='Copied'}
+  catch(e){const r=document.createRange();r.selectNodeContents(code);const s=getSelection();s.removeAllRanges();s.addRange(r);cp.textContent=isMac?'Press ⌘C':'Press Ctrl+C'}
   setTimeout(()=>cp.textContent='Copy',2000);
-});
+}));
 
 /* ---- stats page ---- */
 function drawStats(s){
@@ -95,6 +111,8 @@ function drawStats(s){
   });
   svg+='</svg>';
   $('#chart').innerHTML=svg;
+  const tos=$('#byos');
+  if(tos){tos.textContent='';Object.keys(OSNAME).forEach(o=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${OSNAME[o]}</td><td>${nf.format((s.byOs||{})[o]||0)}</td>`;tos.appendChild(tr)})}
   const tb=$('#byversion');tb.textContent='';
   const vs=Object.entries(s.byVersion||{}).sort((a,b)=>b[0].localeCompare(a[0],undefined,{numeric:true}));
   if(!vs.length){tb.innerHTML='<tr><td colspan="2" class="empty">No downloads yet.</td></tr>'}

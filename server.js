@@ -37,24 +37,34 @@ async function loadReleases(){
     const candidates=[path.join(DOWNLOADS,r.file),path.join(ROOT,'..',r.file)];
     let found=null;
     for(const c of candidates){try{const st=await fsp.stat(c);if(st.isFile()){found={p:c,size:st.size,mtime:st.mtimeMs};break}}catch(e){}}
-    if(!found){console.warn(`  ! Installer not found for ${r.version}: put ${r.file} in the downloads folder.`);out.push({...r,available:false});continue}
+    const os=r.os||'windows';
+    if(!found&&r.url){
+      // too big to host here (e.g. the Mac DMG): send people to the copy on GitHub Releases
+      out.push({...r,os,available:true,remote:true});
+      console.log(`  • ${r.file}  served from ${r.url}`);continue;
+    }
+    if(!found){console.warn(`  ! Installer not found for ${os} ${r.version}: put ${r.file} in the downloads folder.`);out.push({...r,os,available:false});continue}
     const sha256=await hashFile(found.p);
-    out.push({...r,available:true,path:found.p,size:found.size,sha256});
+    if(r.sha256&&r.sha256!==sha256)console.warn(`  ! ${r.file} does not match the sha256 in releases.json`);
+    out.push({...r,os,available:true,path:found.p,size:found.size,sha256});
     console.log(`  • ${r.file}  ${(found.size/1048576).toFixed(1)} MB  sha256 ${sha256.slice(0,16)}…`);
   }
   releases=out;
 }
 function hashFile(p){return new Promise((res,rej)=>{const h=crypto.createHash('sha256');fs.createReadStream(p).on('data',d=>h.update(d)).on('end',()=>res(h.digest('hex'))).on('error',rej)})}
-const latest=()=>releases.find(r=>r.available)||releases[0];
-const publicRelease=r=>r&&({version:r.version,file:r.file,platform:r.platform,released:r.released,size:r.size||0,sha256:r.sha256||'',available:!!r.available,notes:r.notes||[]});
+const OSES=['windows','mac'];
+const latest=(os='windows')=>releases.find(r=>r.os===os&&r.available)||releases.find(r=>r.os===os);
+const publicRelease=r=>r&&({os:r.os,version:r.version,file:r.file,platform:r.platform,released:r.released,size:r.size||0,sha256:r.sha256||'',available:!!r.available,notes:r.notes||[]});
 
 /* ---------------- download counter ---------------- */
-let counts={total:0,byVersion:{},byDay:{}};
+let counts={total:0,byVersion:{},byOs:{},byDay:{}};
 let saveTimer=null,saving=Promise.resolve();
 function loadCounts(){
-  try{const c=JSON.parse(fs.readFileSync(COUNTS,'utf8'));counts={total:+c.total||0,byVersion:c.byVersion||{},byDay:c.byDay||{}}}
+  // byOs was added with the Mac version; downloads before it were all Windows
+  const read=c=>({total:+c.total||0,byVersion:c.byVersion||{},byOs:c.byOs||{windows:+c.total||0},byDay:c.byDay||{}});
+  try{counts=read(JSON.parse(fs.readFileSync(COUNTS,'utf8')))}
   catch(e){if(e.code!=='ENOENT')console.warn('  ! Could not read the counter file, starting from its backup or 0:',e.message);
-    try{const c=JSON.parse(fs.readFileSync(COUNTS+'.bak','utf8'));counts={total:+c.total||0,byVersion:c.byVersion||{},byDay:c.byDay||{}}}catch(e2){}}
+    try{counts=read(JSON.parse(fs.readFileSync(COUNTS+'.bak','utf8')))}catch(e2){}}
 }
 function scheduleSave(){
   clearTimeout(saveTimer);
@@ -68,14 +78,15 @@ async function writeCounts(){
   await fsp.rename(tmp,COUNTS);
 }
 function dayKey(d=new Date()){const t=new Date(d.getTime()+TZ_OFFSET_MIN*60000);return t.toISOString().slice(0,10)}
-const recent=new Map(); // ip|version -> time, so a double click counts once
-function countDownload(ip,version){
-  const k=ip+'|'+version,now=Date.now();
+const recent=new Map(); // ip|os|version -> time, so a double click counts once
+function countDownload(ip,rel){
+  const version=rel.version,k=ip+'|'+rel.os+'|'+version,now=Date.now();
   if(recent.has(k)&&now-recent.get(k)<15000)return false;
   recent.set(k,now);
   if(recent.size>5000)for(const [kk,t] of recent)if(now-t>15000)recent.delete(kk);
   counts.total++;
   counts.byVersion[version]=(counts.byVersion[version]||0)+1;
+  counts.byOs[rel.os]=(counts.byOs[rel.os]||0)+1;
   const d=dayKey();counts.byDay[d]=(counts.byDay[d]||0)+1;
   scheduleSave();
   return true;
@@ -120,8 +131,15 @@ async function notFound(req,res){
 /* ---------------- the download itself ---------------- */
 function serveInstaller(req,res,rel){
   if(!rel||!rel.available)return send(res,503,'This download is not available right now. Please try again later.',{'Content-Type':'text/plain; charset=utf-8','Retry-After':'3600'});
+  const ip=clientIp(req);
+  if(rel.remote){
+    // can't see when a redirected download finishes, so count the redirect (repeat clicks still count once)
+    if(req.method==='GET'&&!req.headers.range&&countDownload(ip,rel))console.log(`  ↗ ${rel.file}  total ${counts.total}`);
+    return send(res,302,null,{Location:rel.url,'Cache-Control':'no-store'});
+  }
   const size=rel.size;
-  const base={...SECURITY,'Content-Type':'application/vnd.microsoft.portable-executable','Content-Disposition':`attachment; filename="${rel.file}"`,
+  const type=rel.os==='mac'?'application/x-apple-diskimage':'application/vnd.microsoft.portable-executable';
+  const base={...SECURITY,'Content-Type':type,'Content-Disposition':`attachment; filename="${rel.file}"`,
     'Accept-Ranges':'bytes','Cache-Control':'no-store','X-Checksum-SHA256':rel.sha256,ETag:`"${rel.sha256.slice(0,32)}"`};
   const range=req.headers.range;
   if(range){
@@ -137,9 +155,8 @@ function serveInstaller(req,res,rel){
   }
   res.writeHead(200,{...base,'Content-Length':size});
   if(req.method==='HEAD')return res.end();
-  const ip=clientIp(req);
   // count when the whole file has been handed over, so cancelled downloads are not counted
-  res.on('finish',()=>{if(countDownload(ip,rel.version))console.log(`  ↓ ${rel.file}  total ${counts.total}`)});
+  res.on('finish',()=>{if(countDownload(ip,rel))console.log(`  ↓ ${rel.file}  total ${counts.total}`)});
   fs.createReadStream(rel.path).on('error',()=>res.destroy()).pipe(res);
 }
 
@@ -148,12 +165,16 @@ const server=http.createServer(async(req,res)=>{
   try{
     const u=new URL(req.url,'http://x');const p=u.pathname;
     if(req.method!=='GET'&&req.method!=='HEAD')return send(res,405,'Method not allowed',{Allow:'GET, HEAD','Content-Type':'text/plain'});
-    if(p==='/download'||p==='/download/windows'||p==='/download/latest')return serveInstaller(req,res,latest());
-    const dv=/^\/download\/v?(\d+\.\d+\.\d+)$/.exec(p);
-    if(dv){const rel=releases.find(r=>r.version===dv[1]);return rel?serveInstaller(req,res,rel):notFound(req,res)}
+    if(p==='/download'||p==='/download/latest')return serveInstaller(req,res,latest('windows'));
+    const dos=/^\/download\/(windows|mac)$/.exec(p);
+    if(dos)return serveInstaller(req,res,latest(dos[1]));
+    // /download/1.0.0 (Windows, as before) or /download/mac/1.0.0
+    const dv=/^\/download\/(?:(windows|mac)\/)?v?(\d+\.\d+\.\d+)$/.exec(p);
+    if(dv){const os=dv[1]||'windows',rel=releases.find(r=>r.os===os&&r.version===dv[2]);return rel?serveInstaller(req,res,rel):notFound(req,res)}
     if(p==='/api/stats'){
       const days=Object.keys(counts.byDay).sort().slice(-60).map(d=>({date:d,count:counts.byDay[d]}));
-      return json(res,{total:counts.total,today:counts.byDay[dayKey()]||0,byVersion:counts.byVersion,days,latest:publicRelease(latest())});
+      return json(res,{total:counts.total,today:counts.byDay[dayKey()]||0,byVersion:counts.byVersion,byOs:counts.byOs,days,
+        latest:publicRelease(latest('windows')),latestByOs:Object.fromEntries(OSES.map(o=>[o,publicRelease(latest(o))]))});
     }
     if(p==='/api/releases')return json(res,releases.map(publicRelease));
     if(p==='/healthz')return json(res,{ok:true});
