@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PDF Lecture Reader</title>
-<meta name="description" content="Free app for Windows and Mac that reads any PDF aloud like a teacher, with natural pauses, word-by-word highlighting on the page and click-to-read. Works offline.">
+<meta name="description" content="Free app for Windows and macOS that reads any PDF aloud like a teacher, with natural pauses, word-by-word highlighting on the page and click-to-read. Works offline.">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="img/favicon.ico" sizes="any">
 <link rel="icon" href="img/favicon-64.png" type="image/png">
@@ -33,38 +33,44 @@
 <main>
 <section class="hero">
   <div class="wrap">
-    <div>
-      <p class="eyebrow">Free for Windows and Mac</p>
+    <div class="hero-text">
+      <p class="eyebrow">Free for Windows and macOS</p>
       <h1 id="headline" aria-label="Any PDF, read aloud like a teacher.">Any PDF, read aloud like a teacher.</h1>
       <p class="lede">Open your notes, a textbook chapter or a research paper. PDF Lecture Reader reads it out with natural pauses, highlights every word on the page as it speaks, and starts from any word you click.</p>
     </div>
 
-    <div class="dl" id="download">
-      <div class="mobile-note" id="mobilenote" hidden>
-        <strong>This app is for computers.</strong>
-        PDF Lecture Reader runs on Windows PCs and Macs. Open this page on your computer to download it.
-        <button class="copy" id="copylink" type="button">Copy link to this page</button>
-      </div>
-      <div class="dlbtns" id="dlbtns">
-        <a class="btn btn-primary" id="dlbtn" data-os="windows" href="/download/windows">
+    <div class="mobile-note" id="mobilenote" hidden>
+      <strong>This app is for computers.</strong>
+      PDF Lecture Reader runs on Windows PCs and Macs. Open this page on your computer to download it.
+      <button class="copy" id="copylink" type="button">Copy link to this page</button>
+    </div>
+
+    <div class="platforms" id="download">
+      <div class="platform" data-platform="windows">
+        <span class="you" hidden>Your computer</span>
+        <div class="plat-head"><svg class="osicon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8.4" height="8.4" rx="1.2"/><rect x="12.6" y="3" width="8.4" height="8.4" rx="1.2"/><rect x="3" y="12.6" width="8.4" height="8.4" rx="1.2"/><rect x="12.6" y="12.6" width="8.4" height="8.4" rx="1.2"/></svg><div><p class="plat-name">Windows</p><p class="plat-req">Windows 10 and 11, 64-bit</p></div></div>
+        <a class="btn btn-primary" data-os="windows" href="/download/windows">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
           <span>Download for Windows</span>
         </a>
-        <a class="btn btn-secondary" data-os="mac" href="/download/mac">
+        <p class="meta"><span>Version <b data-f="version" data-os="windows">1.0.0</b></span><span data-f="size" data-os="windows">78 MB</span><span>Installer (.exe)</span></p>
+      </div>
+      <div class="platform" data-platform="mac">
+        <span class="you" hidden>Your computer</span>
+        <div class="plat-head"><svg class="osicon line" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg><div><p class="plat-name">macOS</p><p class="plat-req">macOS 11 or newer, Apple Silicon and Intel</p></div></div>
+        <a class="btn btn-primary" data-os="mac" href="/download/mac">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
           <span>Download for Mac</span>
         </a>
+        <p class="meta"><span>Version <b data-f="version" data-os="mac">1.0.0</b></span><span data-f="size" data-os="mac">173 MB</span><span>Disk image (.dmg)</span></p>
       </div>
-      <div class="meta">
-        <span>Version <b data-f="version">1.0.0</b></span>
-        <span data-f="size">78 MB</span>
-        <span>Released <span data-f="released">29/10/2026</span></span>
-        <span data-f="platform">Windows 10 and 11, 64-bit</span>
-      </div>
+    </div>
+
+    <div class="after-dl">
+      <p class="free">Free. No account. No ads. Your PDFs never leave your computer.</p>
       <div class="counter" id="counter" data-min="50" aria-live="polite" hidden>
         <b id="count" class="num">–</b><span id="countlabel">downloads so far</span>
       </div>
-      <p class="free">Free. No account. No ads. Your PDFs never leave your computer.</p>
       <div class="thanks" id="thanks-windows" hidden>
         <strong>Your download is starting.</strong>
         Next:
@@ -90,13 +96,13 @@
 <section class="shot" aria-label="Screenshot">
   <div class="wrap">
     <div class="window">
-      <div class="bar"><img src="img/favicon-64.png" alt="" width="16" height="16"><span>PDF Lecture Reader</span><span aria-hidden="true">— ▢ ✕</span></div>
+      <div class="bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><img src="img/favicon-64.png" alt="" width="16" height="16"><span class="title">PDF Lecture Reader</span><span class="winctl" aria-hidden="true">— ▢ ✕</span></div>
       <picture>
         <source srcset="img/app-dark.webp" media="(prefers-color-scheme: dark)">
         <img src="img/app-light.webp" width="1439" height="872" alt="PDF Lecture Reader reading a PDF about rainbows. The current sentence is highlighted in yellow on the PDF page on the left, the spoken word 'slows' is marked in orange, and the transcript of the section is on the right." loading="eager">
       </picture>
     </div>
-    <p class="caption">The PDF on the left, the transcript on the right. Yellow is the sentence being read; orange is the word being spoken.</p>
+    <p class="caption">The same app on Windows and Mac. Yellow is the sentence being read; orange is the word being spoken.</p>
   </div>
 </section>
 
@@ -146,39 +152,51 @@
 <section class="band alt" id="install">
   <div class="wrap">
     <h2>Up and reading in a minute</h2>
-    <div class="ostabs" role="tablist" aria-label="Install steps for">
-      <button type="button" role="tab" id="tab-windows" aria-controls="steps-windows" aria-selected="true">Windows</button>
-      <button type="button" role="tab" id="tab-mac" aria-controls="steps-mac" aria-selected="false">Mac</button>
+    <p class="intro">Three steps on either system.</p>
+    <div class="oscols">
+      <div class="oscol" data-platform="windows">
+        <h3><svg class="osicon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8.4" height="8.4" rx="1.2"/><rect x="12.6" y="3" width="8.4" height="8.4" rx="1.2"/><rect x="3" y="12.6" width="8.4" height="8.4" rx="1.2"/><rect x="12.6" y="12.6" width="8.4" height="8.4" rx="1.2"/></svg>Windows</h3>
+        <ol class="steps">
+          <li><h4>Download</h4><p>Click <b>Download for Windows</b>. The installer is about 78 MB.</p></li>
+          <li><h4>Install</h4><p>Open it from your Downloads. If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>. Accept the license and click Install.</p></li>
+          <li><h4>Open a PDF and press Play</h4><p>Choose a PDF or drag one in. You can also right-click any PDF in File Explorer and pick <b>Read aloud with PDF Lecture Reader</b>.</p></li>
+        </ol>
+      </div>
+      <div class="oscol" data-platform="mac">
+        <h3><svg class="osicon line" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>macOS</h3>
+        <ol class="steps">
+          <li><h4>Download</h4><p>Click <b>Download for Mac</b>. The disk image is about 173 MB and works on Apple Silicon and Intel Macs.</p></li>
+          <li><h4>Install</h4><p>Open it and drag <b>PDF Lecture Reader</b> onto <b>Applications</b>. The first time you open it, click <b>Done</b>, then <b>System Settings → Privacy &amp; Security → Open Anyway</b>.</p></li>
+          <li><h4>Open a PDF and press Play</h4><p>Choose a PDF or drag one in. You can also right-click any PDF in Finder and pick <b>Open With → PDF Lecture Reader</b>.</p></li>
+        </ol>
+      </div>
     </div>
-    <ol class="steps" id="steps-windows" role="tabpanel" aria-labelledby="tab-windows">
-      <li><h3>Download</h3><p>Click <b>Download for Windows</b>. The installer is about 78 MB.</p></li>
-      <li><h3>Install</h3><p>Open it from your Downloads. If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>. Accept the license and click Install.</p></li>
-      <li><h3>Open a PDF and press Play</h3><p>Choose a PDF or drag one in. You can also right-click any PDF in File Explorer and pick <b>Read aloud with PDF Lecture Reader</b>.</p></li>
-    </ol>
-    <ol class="steps" id="steps-mac" role="tabpanel" aria-labelledby="tab-mac" hidden>
-      <li><h3>Download</h3><p>Click <b>Download for Mac</b>. The disk image is about 173 MB and works on Apple Silicon and Intel Macs.</p></li>
-      <li><h3>Install</h3><p>Open it and drag <b>PDF Lecture Reader</b> onto <b>Applications</b>. The first time you open it, click <b>Done</b>, then <b>System Settings → Privacy &amp; Security → Open Anyway</b>.</p></li>
-      <li><h3>Open a PDF and press Play</h3><p>Choose a PDF or drag one in. You can also right-click any PDF in Finder and pick <b>Open With → PDF Lecture Reader</b>.</p></li>
-    </ol>
   </div>
 </section>
 
 <section class="band" id="details">
   <div class="wrap">
     <h2>Details</h2>
+    <div class="tablewrap">
+      <table class="compare">
+        <thead><tr><th scope="col"><span class="sr">Item</span></th><th scope="col"><svg class="osicon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8.4" height="8.4" rx="1.2"/><rect x="12.6" y="3" width="8.4" height="8.4" rx="1.2"/><rect x="3" y="12.6" width="8.4" height="8.4" rx="1.2"/><rect x="12.6" y="12.6" width="8.4" height="8.4" rx="1.2"/></svg>Windows</th><th scope="col"><svg class="osicon line" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>macOS</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Version</th><td data-f="version" data-os="windows">1.0.0</td><td data-f="version" data-os="mac">1.0.0</td></tr>
+          <tr><th scope="row">Released</th><td data-f="released" data-os="windows">29/10/2026</td><td data-f="released" data-os="mac">30/10/2026</td></tr>
+          <tr><th scope="row">Download</th><td><span data-f="size" data-os="windows">78 MB</span> installer (.exe)</td><td><span data-f="size" data-os="mac">173 MB</span> disk image (.dmg)</td></tr>
+          <tr><th scope="row">Needs</th><td>Windows 10 or 11, 64-bit, about 300 MB free space</td><td>macOS 11 Big Sur or newer, Apple Silicon or Intel, about 450 MB free space</td></tr>
+          <tr><th scope="row">PDFs open from</th><td>Right-click in File Explorer, or drag onto the window</td><td>Open With in Finder, or drop on the Dock icon</td></tr>
+          <tr><th scope="row">SHA-256</th><td><div class="hash"><code data-f="sha256" data-os="windows">Loading…</code><button class="copy" type="button">Copy</button></div></td><td><div class="hash"><code data-f="sha256" data-os="mac">Loading…</code><button class="copy" type="button">Copy</button></div></td></tr>
+        </tbody>
+      </table>
+    </div>
     <div class="facts">
       <dl>
-        <div class="item"><dt>Version</dt><dd data-f="version">1.0.0</dd></div>
-        <div class="item"><dt>Released</dt><dd>Windows <span data-f="released" data-os="windows">29/10/2026</span> · Mac <span data-f="released" data-os="mac">30/10/2026</span></dd></div>
-        <div class="item"><dt>Download size</dt><dd>Windows <span data-f="size" data-os="windows">78 MB</span> · Mac <span data-f="size" data-os="mac">173 MB</span></dd></div>
-        <div class="item"><dt>Needs</dt><dd>Windows 10 or 11, 64-bit, about 300 MB free space<br>or macOS 11 Big Sur or newer, Apple Silicon or Intel, about 450 MB free space</dd></div>
         <div class="item"><dt>Works with</dt><dd>PDFs with selectable text. Scans can be viewed but not read aloud.</dd></div>
         <div class="item"><dt>Price</dt><dd>Free for personal, study and work use</dd></div>
       </dl>
       <dl>
         <div class="item"><dt>What's new</dt><dd><ul class="notes" id="notes"><li>First release.</li></ul></dd></div>
-        <div class="item"><dt>SHA-256 Windows</dt><dd><div class="hash"><code data-f="sha256" data-os="windows">Loading…</code><button class="copy" type="button">Copy</button></div></dd></div>
-        <div class="item"><dt>SHA-256 Mac</dt><dd><div class="hash"><code data-f="sha256" data-os="mac">Loading…</code><button class="copy" type="button">Copy</button></div></dd></div>
         <div class="item"><dt>License</dt><dd><a href="/license">End user license agreement</a> · <a href="/THIRD-PARTY-NOTICES.txt">Third-party notices</a></dd></div>
       </dl>
     </div>
@@ -232,11 +250,11 @@
     <h2>Turn your next chapter into a lecture</h2>
     <div class="dlbtns row">
       <a class="btn btn-primary" href="/download/windows" data-dl data-os="windows">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+        <svg class="osicon btnicon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8.4" height="8.4" rx="1.2"/><rect x="12.6" y="3" width="8.4" height="8.4" rx="1.2"/><rect x="3" y="12.6" width="8.4" height="8.4" rx="1.2"/><rect x="12.6" y="12.6" width="8.4" height="8.4" rx="1.2"/></svg>
         <span>Download for Windows</span>
       </a>
-      <a class="btn btn-secondary" href="/download/mac" data-dl data-os="mac">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+      <a class="btn btn-primary" href="/download/mac" data-dl data-os="mac">
+        <svg class="osicon btnicon line" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>
         <span>Download for Mac</span>
       </a>
     </div>

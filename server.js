@@ -39,9 +39,11 @@ async function loadReleases(){
     for(const c of candidates){try{const st=await fsp.stat(c);if(st.isFile()){found={p:c,size:st.size,mtime:st.mtimeMs};break}}catch(e){}}
     const os=r.os||'windows';
     if(!found&&r.url){
-      // too big to host here (e.g. the Mac DMG): send people to the copy on GitHub Releases
-      out.push({...r,os,available:true,remote:true});
-      console.log(`  • ${r.file}  served from ${r.url}`);continue;
+      // too big to host here (e.g. the Mac DMG): send people to the copy on GitHub Releases,
+      // but only once it is really there, so nobody lands on GitHub's 404 page
+      const rr={...r,os,available:false,remote:true};
+      await checkRemote(rr);
+      out.push(rr);continue;
     }
     if(!found){console.warn(`  ! Installer not found for ${os} ${r.version}: put ${r.file} in the downloads folder.`);out.push({...r,os,available:false});continue}
     const sha256=await hashFile(found.p);
@@ -51,6 +53,16 @@ async function loadReleases(){
   }
   releases=out;
 }
+async function checkRemote(r){
+  try{
+    const res=await fetch(r.url,{method:'HEAD',redirect:'manual',signal:AbortSignal.timeout(10000)});
+    const ok=res.status<400;
+    if(ok!==r.available)console.log(ok?`  • ${r.file}  served from ${r.url}`:`  ! ${r.file} is not on ${r.url} yet (HTTP ${res.status}): its button says "coming soon"`);
+    r.available=ok;
+  }catch(e){/* network hiccup: keep the last answer */}
+}
+// re-check every 5 minutes, so an upload to GitHub Releases goes live without a redeploy
+setInterval(()=>releases.filter(r=>r.remote).forEach(checkRemote),5*60000).unref();
 function hashFile(p){return new Promise((res,rej)=>{const h=crypto.createHash('sha256');fs.createReadStream(p).on('data',d=>h.update(d)).on('end',()=>res(h.digest('hex'))).on('error',rej)})}
 const OSES=['windows','mac'];
 const latest=(os='windows')=>releases.find(r=>r.os===os&&r.available)||releases.find(r=>r.os===os);
@@ -123,6 +135,10 @@ async function serveStatic(req,res,urlPath){
   if(req.method==='HEAD')return res.end();
   fs.createReadStream(file).pipe(res);
 }
+async function comingSoon(req,res){
+  try{const body=await fsp.readFile(path.join(PUBLIC,'coming-soon.html'));send(res,503,req.method==='HEAD'?null:body,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Retry-After':'3600'})}
+  catch(e){send(res,503,'This download is not ready yet. Please try again later.',{'Content-Type':'text/plain; charset=utf-8','Retry-After':'3600'})}
+}
 async function notFound(req,res){
   try{const body=await fsp.readFile(path.join(PUBLIC,'404.html'));send(res,404,req.method==='HEAD'?null:body,{'Content-Type':'text/html; charset=utf-8'})}
   catch(e){send(res,404,'Not found',{'Content-Type':'text/plain; charset=utf-8'})}
@@ -130,7 +146,7 @@ async function notFound(req,res){
 
 /* ---------------- the download itself ---------------- */
 function serveInstaller(req,res,rel){
-  if(!rel||!rel.available)return send(res,503,'This download is not available right now. Please try again later.',{'Content-Type':'text/plain; charset=utf-8','Retry-After':'3600'});
+  if(!rel||!rel.available)return comingSoon(req,res);
   const ip=clientIp(req);
   if(rel.remote){
     // can't see when a redirected download finishes, so count the redirect (repeat clicks still count once)

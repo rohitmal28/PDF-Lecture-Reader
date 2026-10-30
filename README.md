@@ -52,6 +52,7 @@ The Mac DMG (about 173 MB) is too big to commit to GitHub, which allows files up
 
 - If the DMG is in `downloads` or the folder above, the site serves it itself, like the Windows installer.
 - If it isn't (the hosted site), `/download/mac` redirects to the GitHub Releases copy. Those downloads are counted when the redirect happens, since the site can't see when they finish.
+- The site checks that the GitHub copy really exists, at startup and every 5 minutes. Until it does, the Mac button says "coming soon" and `/download/mac` shows a "coming soon" page instead of GitHub's 404. Once you upload the file to the release, it goes live by itself within 5 minutes, without a redeploy.
 
 The DMG is built by GitHub Actions. See `desktop/README.md`.
 

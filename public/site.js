@@ -11,12 +11,12 @@ const isMac=/Mac/i.test((navigator.userAgentData&&navigator.userAgentData.platfo
 const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(/Mac/i.test(navigator.platform||'')&&navigator.maxTouchPoints>1);
 const featured=isMac?'mac':'windows';
 const OSNAME={windows:'Windows',mac:'Mac'};
-if(isMac)document.querySelectorAll('.dlbtns').forEach(box=>{
-  const win=box.querySelector('[data-os="windows"]'),mac=box.querySelector('[data-os="mac"]');
-  if(!win||!mac)return;
-  win.className='btn btn-secondary';mac.className='btn btn-primary';box.prepend(mac);
-  if(win.id==='dlbtn'){win.removeAttribute('id');mac.id='dlbtn'}
-});
+if(isMac)document.documentElement.classList.add('os-mac');
+// mark the visitor's own system and put it first; both stay equally prominent
+if(!isMobile){
+  document.querySelectorAll(`[data-platform="${featured}"]`).forEach(el=>{el.classList.add('is-you');const y=el.querySelector('.you');if(y)y.hidden=false});
+  if(isMac)document.querySelectorAll('.platforms,.oscols,.dlbtns').forEach(el=>el.classList.add('mac-first'));
+}
 
 /* ---- phones and tablets: the app needs a computer ---- */
 if(isMobile){
@@ -28,13 +28,6 @@ if(isMobile){
     catch(e){cl.textContent=url}
   });
 }
-
-/* ---- install steps: show the visitor's system, switch with the tabs ---- */
-function showSteps(os){
-  ['windows','mac'].forEach(o=>{const t=$('#tab-'+o),p=$('#steps-'+o);if(t)t.setAttribute('aria-selected',String(o===os));if(p)p.hidden=o!==os});
-}
-['windows','mac'].forEach(o=>{const t=$('#tab-'+o);if(t)t.addEventListener('click',()=>showSteps(o))});
-showSteps(featured);
 
 /* ---- headline: a reading highlight moves across the words, pausing like the app ---- */
 const h=$('#headline');
@@ -81,7 +74,7 @@ function fill(stats){
     // the counter stays hidden until there is a real number worth showing
     const box=$('#counter');if(box)box.hidden=stats.total<(+box.dataset.min||0);
   }
-  document.querySelectorAll('a[data-os]').forEach(b=>{const x=by[b.dataset.os];if(x&&x.available===false){b.setAttribute('aria-disabled','true');b.lastElementChild.textContent=`${OSNAME[b.dataset.os]} download unavailable right now`}});
+  document.querySelectorAll('a[data-os]').forEach(b=>{const x=by[b.dataset.os];if(x&&x.available===false){b.setAttribute('aria-disabled','true');b.lastElementChild.textContent=`${OSNAME[b.dataset.os]} version coming soon`}else if(x&&x.available){b.removeAttribute('aria-disabled');b.lastElementChild.textContent=`Download for ${OSNAME[b.dataset.os]}`}});
   if(document.body.dataset.page==='stats')drawStats(stats);
 }
 async function refresh(){
