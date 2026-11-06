@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-title PDF Lecture Reader website
+title StudyDesk PDF website
 
 where node >nul 2>&1
 if errorlevel 1 (
@@ -13,9 +13,9 @@ if errorlevel 1 (
   exit /b 1
 )
 
-if not exist "downloads\PDF-Lecture-Reader-Setup-1.0.0.exe" if not exist "..\PDF-Lecture-Reader-Setup-1.0.0.exe" (
+if not exist "downloads\StudyDesk-PDF-Setup-2.0.0.exe" if not exist "..\StudyDesk-PDF-Setup-2.0.0.exe" (
   echo.
-  echo  Warning: PDF-Lecture-Reader-Setup-1.0.0.exe was not found.
+  echo  Warning: StudyDesk-PDF-Setup-2.0.0.exe was not found.
   echo  Put it in the "downloads" folder, or in the folder above this one.
   echo.
 )

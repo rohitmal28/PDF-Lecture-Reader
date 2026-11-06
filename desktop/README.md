@@ -32,7 +32,7 @@ npm ci
 npm run dist:win
 ```
 
-This makes `dist/PDF-Lecture-Reader-Setup-<version>.exe`: license page, install just for you or for everyone, choice of folder, an extras page (desktop shortcut, right-click menu for PDFs), Start menu shortcut and uninstaller. It uses the Apps entry `PDFLectureReader`, so it installs over 1.0.0 and later versions. Copy the .exe into the website's `downloads` folder and add it to `releases.json`.
+This makes `dist/StudyDesk-PDF-Setup-<version>.exe`: license page, install just for you or for everyone, choice of folder, an extras page (desktop shortcut, right-click menu for PDFs), Start menu shortcut and uninstaller. It uses the Apps entry `PDFLectureReader`, so it installs over 1.0.0 and later versions. Copy the .exe into the website's `downloads` folder and add it to `releases.json`.
 
 ## Microsoft Store (installs without the "Windows protected your PC" warning)
 
@@ -53,8 +53,8 @@ A Mac app has to be built on a Mac. You don't need one: GitHub builds it.
 
 1. Push this repository to GitHub.
 2. Open the repository's **Actions** tab, pick **Build Mac app**, click **Run workflow**.
-3. After about 10 minutes, open the finished run and download **PDF-Lecture-Reader-mac** at the bottom.
-   Inside is `PDF-Lecture-Reader-1.0.0-mac.dmg`.
+3. After about 10 minutes, open the finished run and download **StudyDesk-PDF-mac** at the bottom.
+   Inside is `StudyDesk-PDF-<version>-mac.dmg`.
 
 To publish it, attach the DMG to a release on the repository's **Releases** page, and put its size and sha256 in the website's `releases.json`.
 

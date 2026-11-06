@@ -1,6 +1,6 @@
 name: Build Mac app
 
-# Builds the macOS version of PDF Lecture Reader on a GitHub-hosted Mac.
+# Builds the macOS version of StudyDesk PDF on a GitHub-hosted Mac.
 # Run it from the Actions tab ("Run workflow"), then attach the DMG to a release by hand,
 # so the file on GitHub Releases matches the sha256 in releases.json.
 on:

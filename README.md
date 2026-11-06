@@ -58,10 +58,10 @@ The DMG is built by GitHub Actions. See `desktop/README.md`.
 
 ## Releasing a new version
 
-1. Put the new installer, for example `PDF-Lecture-Reader-Setup-1.1.0.exe`, in `downloads`.
-2. Add it to the **top** of `releases.json`. For each system (`"os"`: `"windows"` or `"mac"`), the first available entry is "latest":
+1. Put the new installer, for example `StudyDesk-PDF-Setup-2.1.0.exe`, in `downloads`. Extension zips go there too.
+2. Add it to the **top** of `releases.json`. For each kind of download (`"os"`: `"windows"`, `"mac"`, `"chrome"` or `"firefox"`), the first available entry is "latest":
    ```json
-   { "os": "windows", "version": "1.1.0", "file": "PDF-Lecture-Reader-Setup-1.1.0.exe",
+   { "os": "windows", "version": "2.1.0", "file": "StudyDesk-PDF-Setup-2.1.0.exe",
      "platform": "Windows 10 and 11, 64-bit", "released": "2026-12-01",
      "notes": ["What changed"] }
    ```
