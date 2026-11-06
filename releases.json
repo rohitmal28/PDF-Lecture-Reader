@@ -18,6 +18,8 @@
     "version": "1.1.0",
     "file": "PDF-Lecture-Reader-1.1.0-mac.dmg",
     "url": "https://github.com/rohitmal28/PDF-Lecture-Reader/releases/download/v1.1.0/PDF-Lecture-Reader-1.1.0-mac.dmg",
+    "size": 181639172,
+    "sha256": "f9ee9856223c6c01d8f4c6bb1c7a333ef62a10c19b3aa71940cef9c7b46df3b5",
     "platform": "macOS 11 or newer, Apple Silicon and Intel",
     "released": "2026-11-06",
     "notes": [
