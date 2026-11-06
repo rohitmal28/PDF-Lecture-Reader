@@ -10,7 +10,7 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMac=/Mac/i.test((navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||navigator.userAgent)&&!(navigator.maxTouchPoints>1);
 const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(/Mac/i.test(navigator.platform||'')&&navigator.maxTouchPoints>1);
 const featured=isMac?'mac':'windows';
-const OSNAME={windows:'Windows',mac:'Mac'};
+const OSNAME={windows:'Windows',mac:'Mac',chrome:'Chrome extension',firefox:'Firefox extension'};
 if(isMac)document.documentElement.classList.add('os-mac');
 // mark the visitor's own system and put it first; both stay equally prominent
 if(!isMobile){
@@ -24,7 +24,7 @@ if(isMobile){
   const cl=$('#copylink');
   if(cl)cl.addEventListener('click',async()=>{
     const url=location.origin+'/';
-    try{if(navigator.share){await navigator.share({title:'PDF Lecture Reader',url})}else{await navigator.clipboard.writeText(url);cl.textContent='Link copied'}}
+    try{if(navigator.share){await navigator.share({title:'StudyDesk PDF',url})}else{await navigator.clipboard.writeText(url);cl.textContent='Link copied'}}
     catch(e){cl.textContent=url}
   });
 }
@@ -74,7 +74,7 @@ function fill(stats){
     // the counter stays hidden until there is a real number worth showing
     const box=$('#counter');if(box)box.hidden=stats.total<(+box.dataset.min||0);
   }
-  document.querySelectorAll('a[data-os]').forEach(b=>{const x=by[b.dataset.os];if(x&&x.available===false){b.setAttribute('aria-disabled','true');b.lastElementChild.textContent=`${OSNAME[b.dataset.os]} version coming soon`}else if(x&&x.available){b.removeAttribute('aria-disabled');b.lastElementChild.textContent=`Download for ${OSNAME[b.dataset.os]}`}});
+  document.querySelectorAll('a[data-os]').forEach(b=>{const x=by[b.dataset.os],label=b.dataset.label||`Download for ${OSNAME[b.dataset.os]}`;if(x&&x.available===false){b.setAttribute('aria-disabled','true');b.lastElementChild.textContent=`${OSNAME[b.dataset.os]}: coming soon`}else if(x&&x.available){b.removeAttribute('aria-disabled');b.lastElementChild.textContent=label}});
   if(document.body.dataset.page==='stats')drawStats(stats);
 }
 async function refresh(){

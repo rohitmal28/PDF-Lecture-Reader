@@ -1,5 +1,5 @@
 'use strict';
-/* PDF Lecture Reader — PDF tools: merge PDFs, images to PDF, and a PDF editor.
+/* StudyDesk PDF — PDF tools: merge PDFs, images to PDF, and a PDF editor.
    The same file runs in the desktop app and in the browser extension.
    pdf.js shows the pages, pdf-lib writes the new PDF. Everything stays on this device. */
 (()=>{
@@ -140,7 +140,7 @@ function parseRange(s,n){
   return out;
 }
 function stamp(out,title){
-  out.setProducer('PDF Lecture Reader');out.setCreator('PDF Lecture Reader');
+  out.setProducer('StudyDesk PDF');out.setCreator('StudyDesk PDF');
   if(title)out.setTitle(title);
 }
 async function renderTo(canvas,doc,index,cssWidth){
@@ -156,7 +156,7 @@ const T={tool:'',from:'start',busy:false,done:null};
 const view=h('section',{id:'tools',hidden:true,'aria-labelledby':'t-title'});
 const bar=h('header',{class:'t-bar'});
 const barIn=h('div',{class:'gut'});
-const backB=btn('← Back',()=>close(),{id:'t-back',title:'Back to the start screen'});
+const backB=btn('← PDF Tools',()=>close(),{id:'t-back'});
 const titleEl=h('h1',{id:'t-title'});
 const statusEl=h('span',{class:'t-status',id:'t-status','aria-live':'polite'});
 const nameIn=h('input',{id:'t-name',type:'text',spellcheck:'false',autocomplete:'off','aria-label':'File name for the new PDF'});
@@ -185,14 +185,14 @@ filePick.onchange=()=>{const fs=[...filePick.files];filePick.value='';if(fs.leng
 function open(tool,opts={}){
   if(T.busy)return;
   if(!view.hidden&&T.tool==='edit'&&E.dirty&&tool!=='edit'&&!confirm('Leave the editor? Changes you have not saved will be lost.'))return;
-  if(view.hidden){T.from=!appEl.hidden?'app':'start';T.title=document.title}
+  if(view.hidden){T.from=!appEl.hidden?'app':'start';T.title=document.title;backB.textContent=T.from==='app'?'← Back to the PDF':'← PDF Tools'}
   if(window.plr&&window.plr.stop)window.plr.stop();
   startEl.hidden=true;appEl.hidden=true;view.hidden=false;
   showMsg('');hideDone();status('');
   if(T.tool==='edit'&&tool!=='edit')edReset();
   T.tool=tool;body.innerHTML='';body.className='t-body t-'+tool;
   ({merge:mergeView,images:imagesView,edit:editView}[tool])(opts);
-  document.title=titleEl.textContent+' · PDF Lecture Reader';
+  document.title=titleEl.textContent+' · StudyDesk PDF';
   refreshSave();
 }
 function close(){
@@ -201,15 +201,16 @@ function close(){
   view.hidden=true;hideDone();
   if(T.tool==='edit')edReset();
   T.tool='';
-  if(T.from==='app'&&window.plr&&window.plr.isOpen&&window.plr.current&&window.plr.current())appEl.hidden=false;else startEl.hidden=false;
-  document.title=T.title||'PDF Lecture Reader';
+  if(T.from==='app'&&window.plr&&window.plr.isOpen&&window.plr.current&&window.plr.current())appEl.hidden=false;else{showTab('tools');startEl.hidden=false}
+  document.title=T.title||'StudyDesk PDF';
 }
 const active=()=>!view.hidden;
 function leave(){
+  showTab('reader');
   if(!active())return true;
   if(T.busy)return false;
   if(T.tool==='edit'&&E.dirty&&!confirm('Open the new PDF? Changes you have not saved in the editor will be lost.'))return false;
-  view.hidden=true;hideDone();if(T.tool==='edit')edReset();T.tool='';startEl.hidden=false;document.title=T.title||'PDF Lecture Reader';
+  view.hidden=true;hideDone();if(T.tool==='edit')edReset();T.tool='';startEl.hidden=false;document.title=T.title||'StudyDesk PDF';
   return true;
 }
 
@@ -229,7 +230,7 @@ function showDone(saved,bytes,note){
   const row=h('div',{class:'t-donerow'});
   if(window.plr&&window.plr.open)row.append(btn('Read it aloud',()=>{
     const ab=toAB(bytes);if(T.tool==='edit')E.dirty=false;
-    view.hidden=true;hideDone();if(T.tool==='edit')edReset();T.tool='';startEl.hidden=false;document.title='PDF Lecture Reader';
+    view.hidden=true;hideDone();if(T.tool==='edit')edReset();T.tool='';showTab('reader');startEl.hidden=false;document.title='StudyDesk PDF';
     window.plr.open(ab,saved.name);
   },{class:'primary'}));
   if(saved.path&&NATIVE.showInFolder)row.append(btn(NATIVE.platform==='darwin'?'Show in Finder':'Show in folder',()=>NATIVE.showInFolder(saved.path)));
@@ -991,13 +992,29 @@ async function edBuild(){
 }
 
 /* ================= entry points ================= */
-const entry=h('div',{class:'tools-entry',id:'toolsEntry'},
-  h('h2',{text:'PDF tools'}),
+/* ---- start screen: StudyDesk PDF has two parts, Lecture Reader and PDF Tools, one tab each ---- */
+const gut=startEl.querySelector('.gut'),brandEl=gut.querySelector('.brand');
+const readerPanel=h('div',{class:'suite-panel',id:'panel-reader',role:'tabpanel','aria-labelledby':'tab-reader'},
+  h('p',{class:'suite-intro',text:'Open any PDF with selectable text. Lecture Reader reads it out loud like a teacher, with pauses between ideas, and highlights each word on the page as it goes.'}));
+for(let n=brandEl.nextSibling;n;){const next=n.nextSibling;readerPanel.appendChild(n);n=next}
+const card=(tool,title,text)=>h('button',{type:'button',class:'tcard',onclick:()=>open(tool)},h('b',{text:title}),h('span',{text}));
+const toolsPanel=h('div',{class:'suite-panel',id:'panel-tools',role:'tabpanel','aria-labelledby':'tab-tools'},
+  h('p',{class:'suite-intro',text:'Everyday PDF jobs, done right here. Your files are never uploaded, and your original is never changed: you always save a new PDF.'}),
   h('div',{class:'tcards'},
-    h('button',{type:'button',class:'tcard',onclick:()=>open('merge')},h('b',{text:'Merge PDFs'}),h('span',{text:'Join several PDFs into one, in any order.'})),
-    h('button',{type:'button',class:'tcard',onclick:()=>open('images')},h('b',{text:'Images to PDF'}),h('span',{text:'Turn JPG or PNG photos into one PDF.'})),
-    h('button',{type:'button',class:'tcard',onclick:()=>open('edit')},h('b',{text:'Edit a PDF'}),h('span',{text:'Add text, draw, highlight, add a signature, rotate or remove pages.'}))));
-const loadingEl=$('loading');if(loadingEl)loadingEl.before(entry);else startEl.querySelector('.gut').appendChild(entry);
+    card('merge','Merge PDFs','Join several PDFs into one, in any order, choosing pages from each.'),
+    card('images','Images to PDF','Turn JPG or PNG photos into one PDF, a page each.'),
+    card('edit','Edit a PDF','Add text, draw, highlight or add a signature. Rotate, reorder or delete pages.')));
+const tab=(id,title,sub)=>h('button',{type:'button',role:'tab',id:'tab-'+id,class:'suite-tab','aria-controls':'panel-'+id,onclick:()=>showTab(id,true)},h('b',{text:title}),h('span',{text:sub}));
+const tabsEl=h('div',{class:'suite-tabs',role:'tablist','aria-label':'StudyDesk PDF'},tab('reader','Lecture Reader','Read a PDF aloud'),tab('tools','PDF Tools','Merge · Images to PDF · Edit'));
+tabsEl.onkeydown=e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const t=$('tab-reader').getAttribute('aria-selected')==='true'?'tools':'reader';showTab(t,true);$('tab-'+t).focus()}};
+brandEl.after(tabsEl,readerPanel,toolsPanel);
+function showTab(t,remember){
+  ['reader','tools'].forEach(x=>{const on=x===t,b=$('tab-'+x);b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;$('panel-'+x).hidden=!on});
+  if(remember)try{localStorage.setItem('plr:tab',t)}catch(e){}
+}
+let firstTab='reader';try{if(localStorage.getItem('plr:tab')==='tools')firstTab='tools'}catch(e){}
+if(new URLSearchParams(location.search).has('src'))firstTab='reader'; // the extension is opening a PDF
+showTab(firstTab);
 
 // "Edit" next to the document name while reading
 const editDoc=h('button',{type:'button',id:'editdoc',title:'Edit this PDF: add text, highlight, rotate or remove pages'},'✎ Edit');

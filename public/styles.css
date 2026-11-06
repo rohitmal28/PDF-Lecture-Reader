@@ -1,4 +1,4 @@
-/* PDF Lecture Reader — website
+/* StudyDesk PDF — website
    Layout: single centred column (max 1120px). Hero = headline with a moving reading highlight + download card,
    then the app screenshot in a window frame, then features, pacing, steps, details, FAQ. */
 @font-face{font-family:'Bricolage Grotesque';font-weight:500;font-style:normal;font-display:swap;src:url('fonts/bricolage-grotesque-latin-500-normal.woff2') format('woff2')}
@@ -86,6 +86,9 @@ h1 .w.on{background:var(--mark-soft);box-shadow:0 .09em 0 var(--mark)}
 .mobile-note strong{display:block;margin-bottom:2px}
 .mobile-note .copy{display:block;margin-top:10px;font-size:.9rem;padding:6px 12px}
 .cta .free{margin-top:14px}
+.ext-btn{margin-top:22px;width:100%}
+#extension .meta{justify-content:flex-start;margin:10px 0 0}
+#extension .oscol{background:var(--bg)}
 .btn svg{width:20px;height:20px;flex:none}
 .meta{font-family:var(--mono);font-size:.78rem;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px}
 .counter{display:flex;align-items:baseline;gap:10px}

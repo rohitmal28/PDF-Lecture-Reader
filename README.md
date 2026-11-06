@@ -1,6 +1,6 @@
-# PDF Lecture Reader — download website
+# StudyDesk PDF — download website
 
-The website people use to download PDF Lecture Reader. It counts every completed download.
+The website people use to download StudyDesk PDF. It counts every completed download.
 
 No packages to install. It only needs **Node.js 18 or newer** (https://nodejs.org).
 

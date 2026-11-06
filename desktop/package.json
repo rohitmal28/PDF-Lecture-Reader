@@ -1,8 +1,8 @@
 {
   "name": "pdf-lecture-reader",
-  "productName": "PDF Lecture Reader",
-  "version": "1.1.0",
-  "description": "Reads any PDF aloud like a teacher, highlighting each word on the page. Also merges, edits and makes PDFs.",
+  "productName": "StudyDesk PDF",
+  "version": "2.0.0",
+  "description": "StudyDesk PDF: Lecture Reader reads PDFs aloud like a teacher; PDF Tools merge, convert and edit PDFs.",
   "author": "Rohit Mal",
   "license": "SEE LICENSE IN LICENSE.txt",
   "main": "app/main.js",
@@ -10,7 +10,8 @@
   "scripts": {
     "start": "electron .",
     "dist:mac": "electron-builder --mac --universal --publish never",
-    "dist:win": "electron-builder --win nsis --x64 --publish never"
+    "dist:win": "electron-builder --win nsis --x64 --publish never",
+    "dist:store": "electron-builder --win appx --x64 --publish never"
   },
   "devDependencies": {
     "electron": "33.4.11",
@@ -18,7 +19,7 @@
   },
   "build": {
     "appId": "com.rohitmal.pdflecturereader",
-    "productName": "PDF Lecture Reader",
+    "productName": "StudyDesk PDF",
     "copyright": "© 2026 Rohit Mal",
     "directories": { "buildResources": "build", "output": "dist" },
     "files": ["app/**/*", "package.json"],
@@ -34,7 +35,7 @@
       "hardenedRuntime": false,
       "minimumSystemVersion": "11.0",
       "target": [{ "target": "dmg", "arch": ["universal"] }],
-      "artifactName": "PDF-Lecture-Reader-${version}-mac.${ext}",
+      "artifactName": "StudyDesk-PDF-${version}-mac.${ext}",
       "fileAssociations": [
         { "ext": "pdf", "name": "PDF document", "role": "Viewer", "rank": "Alternate", "isPackage": false }
       ]
@@ -42,7 +43,17 @@
     "win": {
       "icon": "build/icon.png",
       "target": [{ "target": "nsis", "arch": ["x64"] }],
-      "artifactName": "PDF-Lecture-Reader-Setup-${version}.${ext}"
+      "artifactName": "StudyDesk-PDF-Setup-${version}.${ext}"
+    },
+    "appx": {
+      "applicationId": "StudyDeskPDF",
+      "identityName": "REPLACE.WithPackageIdentityName",
+      "publisher": "CN=REPLACE-WITH-PUBLISHER-ID",
+      "publisherDisplayName": "Rohit Mal",
+      "displayName": "StudyDesk PDF",
+      "backgroundColor": "transparent",
+      "languages": ["en-IN", "en-US", "en-GB"],
+      "artifactName": "StudyDesk-PDF-${version}-store.${ext}"
     },
     "nsis": {
       "guid": "PDFLectureReader",
@@ -53,14 +64,14 @@
       "license": "resources/LICENSE.txt",
       "createDesktopShortcut": false,
       "createStartMenuShortcut": true,
-      "shortcutName": "PDF Lecture Reader",
-      "uninstallDisplayName": "PDF Lecture Reader",
+      "shortcutName": "StudyDesk PDF",
+      "uninstallDisplayName": "StudyDesk PDF",
       "include": "build/installer.nsh",
       "runAfterFinish": true,
       "deleteAppDataOnUninstall": false
     },
     "dmg": {
-      "title": "PDF Lecture Reader ${version}",
+      "title": "StudyDesk PDF ${version}",
       "contents": [
         { "x": 150, "y": 190, "type": "file" },
         { "x": 390, "y": 190, "type": "link", "path": "/Applications" }

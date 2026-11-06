@@ -1,10 +1,13 @@
 'use strict';
-/* PDF Lecture Reader — desktop shell (Windows and macOS) */
+/* StudyDesk PDF — desktop shell (Windows and macOS) */
 const {app,BrowserWindow,Menu,dialog,ipcMain,shell,nativeTheme}=require('electron');
 const path=require('path');
 const fs=require('fs');
 
 const isMac=process.platform==='darwin';
+// the app used to be called PDF Lecture Reader: keep using that settings folder if it exists,
+// so recent documents and reading positions carry over
+{const old=path.join(app.getPath('appData'),'PDF Lecture Reader');if(fs.existsSync(old))app.setPath('userData',old)}
 if(!app.requestSingleInstanceLock()){app.quit();process.exit(0)}
 
 let win=null,rendererReady=false,pending=null;
@@ -60,7 +63,7 @@ function createWindow(){
   const st=loadState();
   win=new BrowserWindow({
     width:st.width||1400,height:st.height||900,x:st.x,y:st.y,minWidth:760,minHeight:520,
-    title:'PDF Lecture Reader',icon:path.join(__dirname,'icon.png'),
+    title:'StudyDesk PDF',icon:path.join(__dirname,'icon.png'),
     backgroundColor:nativeTheme.shouldUseDarkColors?'#14181d':'#eef0f2',show:false,
     webPreferences:{preload:path.join(__dirname,'preload.js'),contextIsolation:true,nodeIntegration:false,sandbox:true,spellcheck:false,autoplayPolicy:'no-user-gesture-required'}
   });
@@ -77,8 +80,8 @@ function createWindow(){
 
 function showAbout(){
   dialog.showMessageBox(win,{
-    type:'info',title:'About PDF Lecture Reader',message:'PDF Lecture Reader',
-    detail:`Version ${app.getVersion()}\n© 2026 Rohit Mal. All rights reserved.\n\nReads any PDF aloud like a teacher, with pauses between ideas, and highlights each word on the page as it is spoken. Also merges PDFs, turns images into PDFs and edits PDFs. Everything runs on this computer; no documents are uploaded.\n\nElectron ${process.versions.electron} · Chromium ${process.versions.chrome} · PDF.js 3.11.174 · pdf-lib 1.17.1`,
+    type:'info',title:'About StudyDesk PDF',message:'StudyDesk PDF',
+    detail:`Version ${app.getVersion()}\n© 2026 Rohit Mal. All rights reserved.\n\nLecture Reader reads any PDF aloud like a teacher, with pauses between ideas, and highlights each word on the page as it is spoken. PDF Tools merge PDFs, turn images into PDFs and edit PDFs. Everything runs on this computer; no documents are uploaded.\n\nFormerly PDF Lecture Reader.\n\nElectron ${process.versions.electron} · Chromium ${process.versions.chrome} · PDF.js 3.11.174 · pdf-lib 1.17.1`,
     buttons:['OK','License agreement','Third-party notices'],defaultId:0,cancelId:0,noLink:true
   }).then(r=>{if(r.response===1)shell.openPath(resourceFile('LICENSE.txt'));if(r.response===2)shell.openPath(resourceFile('THIRD-PARTY-NOTICES.txt'))});
 }
@@ -96,10 +99,6 @@ function buildMenu(){
       {label:'&Open PDF…',accelerator:'CmdOrCtrl+O',click:async()=>{const f=await pickFile();if(!f)return;if(win&&rendererReady)win.webContents.send('open-file',f);else{pending=f;if(!win)createWindow()}}},
       ...(isMac?[{role:'recentDocuments',submenu:[{role:'clearRecentDocuments'}]}]:[]),
       {label:'&Close document',accelerator:'CmdOrCtrl+W',click:()=>{if(win)cmd('home')}},
-      {type:'separator'},
-      {label:'&Merge PDFs…',click:()=>cmd('tool:merge')},
-      {label:'&Images to PDF…',click:()=>cmd('tool:images')},
-      {label:'&Edit PDF…',accelerator:'CmdOrCtrl+E',click:()=>cmd('tool:edit')},
       ...(isMac?[]:[{type:'separator'},{label:'E&xit',accelerator:'Alt+F4',role:'quit'}])
     ]},
     ...(isMac?[{role:'editMenu'}]:[]),
@@ -110,6 +109,11 @@ function buildMenu(){
       {type:'separator'},
       {label:'Next &section',accelerator:'CmdOrCtrl+Right',click:()=>cmd('nextsec')},
       {label:'Previous s&ection',accelerator:'CmdOrCtrl+Left',click:()=>cmd('prevsec')}
+    ]},
+    {label:'&Tools',submenu:[
+      {label:'&Merge PDFs…',click:()=>cmd('tool:merge')},
+      {label:'&Images to PDF…',click:()=>cmd('tool:images')},
+      {label:'&Edit PDF…',accelerator:'CmdOrCtrl+E',click:()=>cmd('tool:edit')}
     ]},
     {label:'&View',submenu:[
       {label:'Zoom PDF &in',accelerator:'CmdOrCtrl+=',click:()=>cmd('zin')},
@@ -127,11 +131,11 @@ function buildMenu(){
       {label:'&Keyboard shortcuts',click:showShortcuts},
       {label:'&License agreement',click:()=>shell.openPath(resourceFile('LICENSE.txt'))},
       {label:'&Third-party notices',click:()=>shell.openPath(resourceFile('THIRD-PARTY-NOTICES.txt'))},
-      ...(isMac?[]:[{type:'separator'},{label:'&About PDF Lecture Reader',click:showAbout}])
+      ...(isMac?[]:[{type:'separator'},{label:'&About StudyDesk PDF',click:showAbout}])
     ]}
   ];
   if(isMac)t.unshift({label:app.name,submenu:[
-    {label:'About PDF Lecture Reader',click:showAbout},
+    {label:'About StudyDesk PDF',click:showAbout},
     {type:'separator'},{role:'services'},{type:'separator'},
     {role:'hide'},{role:'hideOthers'},{role:'unhide'},
     {type:'separator'},{role:'quit'}

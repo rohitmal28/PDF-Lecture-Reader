@@ -1,6 +1,6 @@
-PDF LECTURE READER — THIRD-PARTY NOTICES
+STUDYDESK PDF — THIRD-PARTY NOTICES
 
-PDF Lecture Reader includes the open-source components below. Each is used under its own licence, reproduced here.
+StudyDesk PDF includes the open-source components below. Each is used under its own licence, reproduced here.
 The Chromium licences are in LICENSES.chromium.html in the installation folder.
 
 ========================================================================

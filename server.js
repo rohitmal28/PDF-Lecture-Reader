@@ -1,6 +1,6 @@
 'use strict';
 /*
-  PDF Lecture Reader — download website
+  StudyDesk PDF — download website
   Zero dependencies: needs only Node.js 18 or newer.
 
   Run:   node server.js
@@ -64,7 +64,7 @@ async function checkRemote(r){
 // re-check every 5 minutes, so an upload to GitHub Releases goes live without a redeploy
 setInterval(()=>releases.filter(r=>r.remote).forEach(checkRemote),5*60000).unref();
 function hashFile(p){return new Promise((res,rej)=>{const h=crypto.createHash('sha256');fs.createReadStream(p).on('data',d=>h.update(d)).on('end',()=>res(h.digest('hex'))).on('error',rej)})}
-const OSES=['windows','mac'];
+const OSES=['windows','mac','chrome','firefox'];
 const latest=(os='windows')=>releases.find(r=>r.os===os&&r.available)||releases.find(r=>r.os===os);
 const publicRelease=r=>r&&({os:r.os,version:r.version,file:r.file,platform:r.platform,released:r.released,size:r.size||0,sha256:r.sha256||'',available:!!r.available,notes:r.notes||[]});
 
@@ -154,7 +154,7 @@ function serveInstaller(req,res,rel){
     return send(res,302,null,{Location:rel.url,'Cache-Control':'no-store'});
   }
   const size=rel.size;
-  const type=rel.os==='mac'?'application/x-apple-diskimage':'application/vnd.microsoft.portable-executable';
+  const type={'.dmg':'application/x-apple-diskimage','.zip':'application/zip'}[path.extname(rel.file).toLowerCase()]||'application/vnd.microsoft.portable-executable';
   const base={...SECURITY,'Content-Type':type,'Content-Disposition':`attachment; filename="${rel.file}"`,
     'Accept-Ranges':'bytes','Cache-Control':'no-store','X-Checksum-SHA256':rel.sha256,ETag:`"${rel.sha256.slice(0,32)}"`};
   const range=req.headers.range;
@@ -182,10 +182,10 @@ const server=http.createServer(async(req,res)=>{
     const u=new URL(req.url,'http://x');const p=u.pathname;
     if(req.method!=='GET'&&req.method!=='HEAD')return send(res,405,'Method not allowed',{Allow:'GET, HEAD','Content-Type':'text/plain'});
     if(p==='/download'||p==='/download/latest')return serveInstaller(req,res,latest('windows'));
-    const dos=/^\/download\/(windows|mac)$/.exec(p);
+    const dos=/^\/download\/(windows|mac|chrome|firefox)$/.exec(p);
     if(dos)return serveInstaller(req,res,latest(dos[1]));
     // /download/1.0.0 (Windows, as before) or /download/mac/1.0.0
-    const dv=/^\/download\/(?:(windows|mac)\/)?v?(\d+\.\d+\.\d+)$/.exec(p);
+    const dv=/^\/download\/(?:(windows|mac|chrome|firefox)\/)?v?(\d+\.\d+\.\d+)$/.exec(p);
     if(dv){const os=dv[1]||'windows',rel=releases.find(r=>r.os===os&&r.version===dv[2]);return rel?serveInstaller(req,res,rel):notFound(req,res)}
     if(p==='/api/stats'){
       const days=Object.keys(counts.byDay).sort().slice(-60).map(d=>({date:d,count:counts.byDay[d]}));
@@ -201,7 +201,7 @@ const server=http.createServer(async(req,res)=>{
 });
 
 (async()=>{
-  console.log('\nPDF Lecture Reader website');
+  console.log('\nStudyDesk PDF website');
   loadCounts();
   await loadReleases();
   server.listen(PORT,HOST,()=>{

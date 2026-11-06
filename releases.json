@@ -1,31 +1,53 @@
 [
   {
     "os": "windows",
-    "version": "1.1.0",
-    "file": "PDF-Lecture-Reader-Setup-1.1.0.exe",
-    "sha256": "960e1422366eea667b68b9b21f13056ef584a2d445fdb7853005096a46249dd8",
+    "version": "2.0.0",
+    "file": "StudyDesk-PDF-Setup-2.0.0.exe",
+    "sha256": "eb081a463df93e3e79f65cc0362df8366c9aa0fd0b7a8b547e2ad8808ed909df",
     "platform": "Windows 10 and 11, 64-bit",
     "released": "2026-11-06",
     "notes": [
-      "New PDF tools: merge PDFs, turn JPG and PNG images into one PDF, and edit PDFs.",
-      "Editor: add text, draw, highlight, white-out, and add a picture or signature. Rotate, reorder, add or delete pages.",
-      "Right-click a PDF in File Explorer and choose Edit with PDF Lecture Reader.",
-      "File menu: Merge PDFs, Images to PDF and Edit PDF (Ctrl+E). Everything stays on your computer."
+      "PDF Lecture Reader is now StudyDesk PDF, with two parts:",
+      "Lecture Reader: reads any PDF aloud like a teacher, highlighting each word.",
+      "PDF Tools: merge PDFs, turn JPG and PNG images into one PDF, and edit PDFs (text, drawing, highlights, white-out, signatures; rotate, reorder, add or delete pages).",
+      "Installs over PDF Lecture Reader and keeps your settings, reading positions and recent documents."
     ]
   },
   {
     "os": "mac",
-    "version": "1.1.0",
-    "file": "PDF-Lecture-Reader-1.1.0-mac.dmg",
-    "url": "https://github.com/rohitmal28/PDF-Lecture-Reader/releases/download/v1.1.0/PDF-Lecture-Reader-1.1.0-mac.dmg",
-    "size": 181639172,
-    "sha256": "f9ee9856223c6c01d8f4c6bb1c7a333ef62a10c19b3aa71940cef9c7b46df3b5",
+    "version": "2.0.0",
+    "file": "StudyDesk-PDF-2.0.0-mac.dmg",
+    "url": "https://github.com/rohitmal28/PDF-Lecture-Reader/releases/download/v2.0.0/StudyDesk-PDF-2.0.0-mac.dmg",
     "platform": "macOS 11 or newer, Apple Silicon and Intel",
     "released": "2026-11-06",
     "notes": [
-      "New PDF tools: merge PDFs, turn JPG and PNG images into one PDF, and edit PDFs.",
-      "Editor: add text, draw, highlight, white-out, and add a picture or signature. Rotate, reorder, add or delete pages.",
-      "File menu: Merge PDFs, Images to PDF and Edit PDF (⌘E). Everything stays on your Mac."
+      "PDF Lecture Reader is now StudyDesk PDF, with two parts:",
+      "Lecture Reader: reads any PDF aloud like a teacher, highlighting each word.",
+      "PDF Tools: merge PDFs, turn JPG and PNG images into one PDF, and edit PDFs (text, drawing, highlights, white-out, signatures; rotate, reorder, add or delete pages)."
+    ]
+  },
+  {
+    "os": "chrome",
+    "version": "2.0.0",
+    "file": "StudyDesk-PDF-Chrome-Edge-2.0.0.zip",
+    "sha256": "c1adbdf989d3cedf3effc5e3486ee3be58bf83664d80b80116a3328159ca9b10",
+    "platform": "Chrome, Edge, Brave, Opera, Vivaldi",
+    "released": "2026-11-06",
+    "notes": [
+      "Lecture Reader: reads any PDF aloud like a teacher, highlighting each word.",
+      "PDF Tools: merge PDFs, turn JPG and PNG images into one PDF, and edit PDFs (text, drawing, highlights, white-out, signatures; rotate, reorder, add or delete pages)."
+    ]
+  },
+  {
+    "os": "firefox",
+    "version": "2.0.0",
+    "file": "StudyDesk-PDF-Firefox-2.0.0.zip",
+    "sha256": "f08fd2353b4ff0b6564a13c86c1e0a7e9605a857b2415f76f4905147633c4d1f",
+    "platform": "Firefox 140 or newer",
+    "released": "2026-11-06",
+    "notes": [
+      "Lecture Reader: reads any PDF aloud like a teacher, highlighting each word.",
+      "PDF Tools: merge PDFs, turn JPG and PNG images into one PDF, and edit PDFs (text, drawing, highlights, white-out, signatures; rotate, reorder, add or delete pages)."
     ]
   },
   {

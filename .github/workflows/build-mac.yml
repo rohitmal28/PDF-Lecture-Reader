@@ -33,14 +33,14 @@ jobs:
 
       - name: Check the app
         run: |
-          APP="dist/mac-universal/PDF Lecture Reader.app"
+          APP="dist/mac-universal/StudyDesk PDF.app"
           codesign --verify --deep --strict --verbose=2 "$APP"
-          lipo -archs "$APP/Contents/MacOS/PDF Lecture Reader"
+          lipo -archs "$APP/Contents/MacOS/StudyDesk PDF"
           ls -lh dist/*.dmg
           shasum -a 256 dist/*.dmg
 
       - uses: actions/upload-artifact@v4
         with:
-          name: PDF-Lecture-Reader-mac
+          name: StudyDesk-PDF-mac
           path: desktop/dist/*.dmg
           if-no-files-found: error

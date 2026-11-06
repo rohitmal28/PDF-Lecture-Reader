@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PDF Lecture Reader</title>
+<title>StudyDesk PDF</title>
 <meta name="description" content="Free app for Windows and macOS that reads any PDF aloud like a teacher, with natural pauses, word-by-word highlighting on the page and click-to-read. Also merges PDFs, turns images into PDFs and edits PDFs. Works offline.">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="img/favicon.ico" sizes="any">
 <link rel="icon" href="img/favicon-64.png" type="image/png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<meta property="og:title" content="PDF Lecture Reader">
+<meta property="og:title" content="StudyDesk PDF">
 <meta property="og:description" content="Any PDF, read aloud like a teacher. Plus merge, edit and images to PDF. Free for Windows and Mac.">
 <meta property="og:image" content="img/icon-256.png">
 <link rel="preload" href="fonts/bricolage-grotesque-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -19,12 +19,12 @@
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="/"><img src="img/favicon-64.png" alt="" width="32" height="32">PDF Lecture Reader</a>
+    <a class="brand" href="/"><img src="img/favicon-64.png" alt="" width="32" height="32">StudyDesk PDF</a>
     <nav aria-label="Main">
-      <a href="#features">Features</a>
-      <a href="#tools">Tools</a>
-      <a href="#pacing">Pacing</a>
+      <a href="#features">Lecture Reader</a>
+      <a href="#tools">PDF Tools</a>
       <a href="#install">Install</a>
+      <a href="#extension">Extension</a>
       <a href="#faq">Help</a>
       <a class="navdl" href="#download">Download</a>
     </nav>
@@ -37,12 +37,12 @@
     <div class="hero-text">
       <p class="eyebrow">Free for Windows and macOS</p>
       <h1 id="headline" aria-label="Any PDF, read aloud like a teacher.">Any PDF, read aloud like a teacher.</h1>
-      <p class="lede">Open your notes, a textbook chapter or a research paper. PDF Lecture Reader reads it out with natural pauses, highlights every word on the page as it speaks, and starts from any word you click.</p>
+      <p class="lede">StudyDesk PDF has two parts. <b>Lecture Reader</b> reads your notes, textbooks and papers out loud with natural pauses, highlighting every word as it speaks. <b>PDF Tools</b> merge PDFs, turn photos into PDFs and edit them.</p>
     </div>
 
     <div class="mobile-note" id="mobilenote" hidden>
       <strong>This app is for computers.</strong>
-      PDF Lecture Reader runs on Windows PCs and Macs. Open this page on your computer to download it.
+      StudyDesk PDF runs on Windows PCs and Macs. Open this page on your computer to download it.
       <button class="copy" id="copylink" type="button">Copy link to this page</button>
     </div>
 
@@ -69,6 +69,7 @@
 
     <div class="after-dl">
       <p class="free">Free. No account. No ads. Your PDFs never leave your computer.</p>
+      <p class="free">Prefer your browser? Get the extension for <a href="#extension">Chrome and Edge, or Firefox</a>.</p>
       <div class="counter" id="counter" data-min="50" aria-live="polite" hidden>
         <b id="count" class="num">–</b><span id="countlabel">downloads so far</span>
       </div>
@@ -76,7 +77,7 @@
         <strong>Your download is starting.</strong>
         Next:
         <ol>
-          <li>Open <b>PDF-Lecture-Reader-Setup-1.0.0.exe</b> from your Downloads.</li>
+          <li>Open the <b>StudyDesk PDF</b> installer from your Downloads.</li>
           <li>If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</li>
           <li>Accept the license agreement and follow the steps.</li>
         </ol>
@@ -85,7 +86,7 @@
         <strong>Your download is starting.</strong>
         Next:
         <ol>
-          <li>Open <b>PDF-Lecture-Reader-1.0.0-mac.dmg</b> from your Downloads and drag <b>PDF Lecture Reader</b> onto <b>Applications</b>.</li>
+          <li>Open the downloaded <b>.dmg</b> file and drag <b>StudyDesk PDF</b> onto <b>Applications</b>.</li>
           <li>Open it from Applications. When macOS says it can't check the app, click <b>Done</b>.</li>
           <li>Open <b>System Settings → Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b>. You only do this once.</li>
         </ol>
@@ -97,10 +98,10 @@
 <section class="shot" aria-label="Screenshot">
   <div class="wrap">
     <div class="window">
-      <div class="bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><img src="img/favicon-64.png" alt="" width="16" height="16"><span class="title">PDF Lecture Reader</span><span class="winctl" aria-hidden="true">— ▢ ✕</span></div>
+      <div class="bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><img src="img/favicon-64.png" alt="" width="16" height="16"><span class="title">StudyDesk PDF</span><span class="winctl" aria-hidden="true">— ▢ ✕</span></div>
       <picture>
         <source srcset="img/app-dark.webp" media="(prefers-color-scheme: dark)">
-        <img src="img/app-light.webp" width="1439" height="872" alt="PDF Lecture Reader reading a PDF about rainbows. The current sentence is highlighted in yellow on the PDF page on the left, the spoken word 'slows' is marked in orange, and the transcript of the section is on the right." loading="eager">
+        <img src="img/app-light.webp" width="1439" height="872" alt="StudyDesk PDF reading a PDF about rainbows. The current sentence is highlighted in yellow on the PDF page on the left, the spoken word 'slows' is marked in orange, and the transcript of the section is on the right." loading="eager">
       </picture>
     </div>
     <p class="caption">The same app on Windows and Mac. Yellow is the sentence being read; orange is the word being spoken.</p>
@@ -109,8 +110,9 @@
 
 <section class="band alt" id="features">
   <div class="wrap">
+    <p class="eyebrow">Part 1 · Lecture Reader</p>
     <h2>Made for studying, not just listening</h2>
-    <p class="intro">Most text-to-speech reads a page like a robot reading a receipt. PDF Lecture Reader paces itself the way a good teacher does, and keeps your eyes on the page.</p>
+    <p class="intro">Most text-to-speech reads a page like a robot reading a receipt. StudyDesk PDF paces itself the way a good teacher does, and keeps your eyes on the page.</p>
     <div class="features">
       <div class="feature"><h3><i></i>Teacher-style pauses</h3><p>A short pause after each sentence, a longer one between paragraphs, and a proper break before every new section. Labels like "Key idea:" get their own beat.</p></div>
       <div class="feature"><h3><i></i>Word-by-word highlighting</h3><p>The sentence being read lights up on the real PDF page, and the word being spoken is marked as the voice says it. The page scrolls along on its own.</p></div>
@@ -124,8 +126,8 @@
 
 <section class="band" id="tools">
   <div class="wrap">
-    <p class="eyebrow">New in 1.1</p>
-    <h2>PDF tools, built in</h2>
+    <p class="eyebrow">Part 2 · PDF Tools</p>
+    <h2>Merge, convert and edit, without uploading</h2>
     <p class="intro">The everyday jobs you would otherwise upload your files to a website for. Here they run on your computer, so your documents stay private.</p>
     <div class="features">
       <div class="feature"><h3><i></i>Merge PDFs</h3><p>Join lecture notes, handouts and past papers into one file. Drag them into order and pick which pages to keep from each, like <code>1-3, 5</code>.</p></div>
@@ -173,22 +175,58 @@
         <ol class="steps">
           <li><h4>Download</h4><p>Click <b>Download for Windows</b>. The installer is about 79 MB.</p></li>
           <li><h4>Install</h4><p>Open it from your Downloads. If Windows says "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>. Accept the license and click Install.</p></li>
-          <li><h4>Open a PDF and press Play</h4><p>Choose a PDF or drag one in. You can also right-click any PDF in File Explorer and pick <b>Read aloud with PDF Lecture Reader</b> or <b>Edit with PDF Lecture Reader</b>.</p></li>
+          <li><h4>Open a PDF and press Play</h4><p>Choose a PDF or drag one in. You can also right-click any PDF in File Explorer and pick <b>Read aloud with StudyDesk PDF</b> or <b>Edit with StudyDesk PDF</b>.</p></li>
         </ol>
       </div>
       <div class="oscol" data-platform="mac">
         <h3><svg class="osicon line" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>macOS</h3>
         <ol class="steps">
           <li><h4>Download</h4><p>Click <b>Download for Mac</b>. The disk image is about 173 MB and works on Apple Silicon and Intel Macs.</p></li>
-          <li><h4>Install</h4><p>Open it and drag <b>PDF Lecture Reader</b> onto <b>Applications</b>. The first time you open it, click <b>Done</b>, then <b>System Settings → Privacy &amp; Security → Open Anyway</b>.</p></li>
-          <li><h4>Open a PDF and press Play</h4><p>Choose a PDF or drag one in. You can also right-click any PDF in Finder and pick <b>Open With → PDF Lecture Reader</b>.</p></li>
+          <li><h4>Install</h4><p>Open it and drag <b>StudyDesk PDF</b> onto <b>Applications</b>. The first time you open it, click <b>Done</b>, then <b>System Settings → Privacy &amp; Security → Open Anyway</b>.</p></li>
+          <li><h4>Open a PDF and press Play</h4><p>Choose a PDF or drag one in. You can also right-click any PDF in Finder and pick <b>Open With → StudyDesk PDF</b>.</p></li>
         </ol>
       </div>
     </div>
   </div>
 </section>
 
-<section class="band alt" id="details">
+<section class="band alt" id="extension">
+  <div class="wrap">
+    <p class="eyebrow">Browser extension</p>
+    <h2>Or use it in your browser</h2>
+    <p class="intro">The same Lecture Reader and PDF Tools as a browser extension. Read a PDF from a website with one click on the toolbar button, or right-click a PDF link and choose <b>Edit this PDF</b>. Free, and nothing is uploaded.</p>
+    <div class="oscols">
+      <div class="oscol" data-platform="chrome">
+        <h3><svg class="osicon line" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18"/><path d="M6.5 6.5h.01M9.5 6.5h.01"/></svg>Chrome, Edge, Brave, Opera</h3>
+        <ol class="steps">
+          <li><h4>Download and unzip</h4><p>Unzip the file and keep the <b>StudyDesk PDF extension</b> folder somewhere it can stay, such as Documents.</p></li>
+          <li><h4>Turn on Developer mode</h4><p>Type <b>chrome://extensions</b> (or <b>edge://extensions</b>) in the address bar and switch on <b>Developer mode</b>.</p></li>
+          <li><h4>Load it</h4><p>Click <b>Load unpacked</b> and choose the folder. Then pin it from the puzzle-piece menu next to the address bar.</p></li>
+        </ol>
+        <a class="btn btn-primary ext-btn" href="/download/chrome" data-os="chrome" data-label="Download for Chrome and Edge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+          <span>Download for Chrome and Edge</span>
+        </a>
+        <p class="meta"><span>Version <b data-f="version" data-os="chrome">2.0.0</b></span><span data-f="size" data-os="chrome">0.7 MB</span><span>.zip</span></p>
+      </div>
+      <div class="oscol" data-platform="firefox">
+        <h3><svg class="osicon line" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18"/><path d="M6.5 6.5h.01M9.5 6.5h.01"/></svg>Firefox</h3>
+        <ol class="steps">
+          <li><h4>Download</h4><p>Save the .zip file. You don't need to unzip it.</p></li>
+          <li><h4>Load it</h4><p>Type <b>about:debugging#/runtime/this-firefox</b> in the address bar, click <b>Load Temporary Add-on…</b> and choose the .zip file.</p></li>
+          <li><h4>Good to know</h4><p>Firefox removes add-ons loaded this way when it closes. A version that stays installed is on its way.</p></li>
+        </ol>
+        <a class="btn btn-primary ext-btn" href="/download/firefox" data-os="firefox" data-label="Download for Firefox">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+          <span>Download for Firefox</span>
+        </a>
+        <p class="meta"><span>Version <b data-f="version" data-os="firefox">2.0.0</b></span><span data-f="size" data-os="firefox">0.7 MB</span><span>.zip</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="details">
   <div class="wrap">
     <h2>Details</h2>
     <div class="tablewrap">
@@ -217,24 +255,28 @@
   </div>
 </section>
 
-<section class="band" id="faq">
+<section class="band alt" id="faq">
   <div class="wrap">
     <h2>Questions</h2>
     <div class="faq">
       <details>
         <summary>Windows says "Windows protected your PC". Is it safe?</summary>
         <div><p>That message appears for apps that are not yet signed with a paid code-signing certificate. Click <b>More info</b>, then <b>Run anyway</b>.</p>
-        <p>Only do this for an installer you downloaded from this website. To check your copy is the original, compare its SHA-256 (in the Details section above) with the one Windows shows when you run <kbd>certutil -hashfile PDF-Lecture-Reader-Setup-1.0.0.exe SHA256</kbd> in Command Prompt.</p></div>
+        <p>Only do this for an installer you downloaded from this website. To check your copy is the original, compare its SHA-256 (in the Details section above) with the one Windows shows when you run <kbd>certutil -hashfile StudyDesk-PDF-Setup-2.0.0.exe SHA256</kbd> in Command Prompt.</p></div>
       </details>
       <details>
         <summary>My Mac says the app "can't be opened" or "could not be verified".</summary>
-        <div><p>macOS shows that for apps that are not yet signed with a paid Apple Developer ID. Click <b>Done</b>, then open <b>System Settings → Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b> next to PDF Lecture Reader. After that it opens normally.</p>
-        <p>Only do this for a copy you downloaded from this website. To check it is the original, run <kbd>shasum -a 256 ~/Downloads/PDF-Lecture-Reader-1.0.0-mac.dmg</kbd> in Terminal and compare it with the SHA-256 in the Details section above.</p></div>
+        <div><p>macOS shows that for apps that are not yet signed with a paid Apple Developer ID. Click <b>Done</b>, then open <b>System Settings → Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b> next to StudyDesk PDF. After that it opens normally.</p>
+        <p>Only do this for a copy you downloaded from this website. To check it is the original, run <kbd>shasum -a 256 ~/Downloads/StudyDesk-PDF-2.0.0-mac.dmg</kbd> in Terminal and compare it with the SHA-256 in the Details section above.</p></div>
       </details>
       <details>
         <summary>How do I merge PDFs, turn photos into a PDF, or edit a PDF?</summary>
         <div><p>Open the app and pick <b>Merge PDFs</b>, <b>Images to PDF</b> or <b>Edit a PDF</b> under <b>PDF tools</b> on the start screen, or use the <b>File</b> menu. While reading a PDF, click <b>✎ Edit</b> next to its name.</p>
         <p>The new PDF is saved as a separate file; your original is not changed. White-out hides what is under it on the page, but the text is still in the file, so don't use it to remove private information.</p></div>
+      </details>
+      <details>
+        <summary>What happened to PDF Lecture Reader?</summary>
+        <div><p>It grew, so it got a bigger name. StudyDesk PDF is the same app: <b>Lecture Reader</b> is the part that reads PDFs aloud, and <b>PDF Tools</b> is the new part. Installing StudyDesk PDF over PDF Lecture Reader keeps your settings, reading positions and recent documents.</p></div>
       </details>
       <details>
         <summary>Is it really free?</summary>
@@ -257,14 +299,14 @@
       </details>
       <details>
         <summary>How do I uninstall it?</summary>
-        <div><p><b>Windows:</b> <b>Settings → Apps → Installed apps → PDF Lecture Reader → Uninstall</b>. Your own PDF files are never touched. The uninstaller also offers to delete the app's saved settings and recent documents.</p>
-        <p><b>Mac:</b> drag <b>PDF Lecture Reader</b> from Applications to the Bin. To remove its settings and recent documents too, delete the <b>PDF Lecture Reader</b> folder in <kbd>~/Library/Application Support</kbd>.</p></div>
+        <div><p><b>Windows:</b> <b>Settings → Apps → Installed apps → StudyDesk PDF → Uninstall</b>. Your own PDF files are never touched. The uninstaller also offers to delete the app's saved settings and recent documents.</p>
+        <p><b>Mac:</b> drag <b>StudyDesk PDF</b> from Applications to the Bin. To remove its settings and recent documents too, delete the <b>StudyDesk PDF</b> folder in <kbd>~/Library/Application Support</kbd>.</p></div>
       </details>
     </div>
   </div>
 </section>
 
-<section class="band alt cta">
+<section class="band cta">
   <div class="wrap">
     <h2>Turn your next chapter into a lecture</h2>
     <div class="dlbtns row">
