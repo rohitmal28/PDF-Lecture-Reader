@@ -18,6 +18,8 @@
     "version": "2.0.0",
     "file": "StudyDesk-PDF-2.0.0-mac.dmg",
     "url": "https://github.com/rohitmal28/PDF-Lecture-Reader/releases/download/v2.0.0/StudyDesk-PDF-2.0.0-mac.dmg",
+    "size": 181644247,
+    "sha256": "561144926af84fc9191b85587ac24e57e3aff1b57f759c3d5b36bf7f26a96f42",
     "platform": "macOS 11 or newer, Apple Silicon and Intel",
     "released": "2026-11-06",
     "notes": [
