@@ -21,9 +21,9 @@ function readPdf(p){
   const data=fs.readFileSync(p);
   return {name:path.basename(p),path:p,data};
 }
-function sendFile(p){
+function sendFile(p,edit){
   try{
-    const msg=readPdf(p);
+    const msg=readPdf(p);if(edit)msg.edit=true;
     if(win&&rendererReady)win.webContents.send('open-file',msg);else pending=msg;
     if(win){if(win.isMinimized())win.restore();win.focus()}
     app.addRecentDocument(p);
@@ -36,6 +36,19 @@ async function pickFile(){
   catch(e){dialog.showErrorBox('Could not open the PDF',e.message);return null}
 }
 const cmd=c=>{if(win)win.webContents.send('command',c)};
+// PDFs made with the tools: ask where to save, remember the folder for next time
+let saveDir=null;const savedFiles=new Set();
+async function savePdf(name,data){
+  if(!(data instanceof Uint8Array)||!data.length)return null;
+  const safe=String(name||'document.pdf').replace(/[\\/:*?"<>|\u0000-\u001f]+/g,' ').trim()||'document.pdf';
+  const r=await dialog.showSaveDialog(win,{title:'Save PDF',defaultPath:path.join(saveDir||app.getPath('documents'),safe),
+    filters:[{name:'PDF documents',extensions:['pdf']}],properties:['showOverwriteConfirmation','createDirectory']});
+  if(r.canceled||!r.filePath)return null;
+  let p=r.filePath;if(!/\.pdf$/i.test(p))p+='.pdf';
+  fs.writeFileSync(p,Buffer.from(data.buffer,data.byteOffset,data.byteLength));
+  saveDir=path.dirname(p);savedFiles.add(p);app.addRecentDocument(p);
+  return {path:p,name:path.basename(p)};
+}
 
 function loadState(){try{return JSON.parse(fs.readFileSync(statePath(),'utf8'))}catch(e){return {}}}
 function saveState(){
@@ -65,14 +78,14 @@ function createWindow(){
 function showAbout(){
   dialog.showMessageBox(win,{
     type:'info',title:'About PDF Lecture Reader',message:'PDF Lecture Reader',
-    detail:`Version ${app.getVersion()}\n© 2026 Rohit Mal. All rights reserved.\n\nReads any PDF aloud like a teacher, with pauses between ideas, and highlights each word on the page as it is spoken. Everything runs on this computer; no documents are uploaded.\n\nElectron ${process.versions.electron} · Chromium ${process.versions.chrome} · PDF.js 3.11.174`,
+    detail:`Version ${app.getVersion()}\n© 2026 Rohit Mal. All rights reserved.\n\nReads any PDF aloud like a teacher, with pauses between ideas, and highlights each word on the page as it is spoken. Also merges PDFs, turns images into PDFs and edits PDFs. Everything runs on this computer; no documents are uploaded.\n\nElectron ${process.versions.electron} · Chromium ${process.versions.chrome} · PDF.js 3.11.174 · pdf-lib 1.17.1`,
     buttons:['OK','License agreement','Third-party notices'],defaultId:0,cancelId:0,noLink:true
   }).then(r=>{if(r.response===1)shell.openPath(resourceFile('LICENSE.txt'));if(r.response===2)shell.openPath(resourceFile('THIRD-PARTY-NOTICES.txt'))});
 }
 function showShortcuts(){
   const lines=isMac
-    ?['⌘O\tOpen a PDF','Space\tPlay or pause','→ / ←\tNext or previous sentence','⌘→ / ⌘←\tNext or previous section','⌘= / ⌘-\tZoom the PDF in or out','⌘0\tPDF at 100%','⌘W\tClose the document','⌃⌘F\tFull screen']
-    :['Ctrl+O\tOpen a PDF','Space\tPlay or pause','→ / ←\tNext or previous sentence','Ctrl+→ / Ctrl+←\tNext or previous section','Ctrl+= / Ctrl+-\tZoom the PDF in or out','Ctrl+0\tPDF at 100%','Ctrl+W\tClose the document','F11\tFull screen'];
+    ?['⌘O\tOpen a PDF','⌘E\tEdit the PDF','Space\tPlay or pause','→ / ←\tNext or previous sentence','⌘→ / ⌘←\tNext or previous section','⌘= / ⌘-\tZoom the PDF in or out','⌘0\tPDF at 100%','⌘W\tClose the document','⌃⌘F\tFull screen']
+    :['Ctrl+O\tOpen a PDF','Ctrl+E\tEdit the PDF','Space\tPlay or pause','→ / ←\tNext or previous sentence','Ctrl+→ / Ctrl+←\tNext or previous section','Ctrl+= / Ctrl+-\tZoom the PDF in or out','Ctrl+0\tPDF at 100%','Ctrl+W\tClose the document','F11\tFull screen'];
   dialog.showMessageBox(win,{type:'none',title:'Keyboard shortcuts',message:'Keyboard shortcuts',noLink:true,buttons:['OK'],
     detail:[...lines,'','Click any word on the PDF, or any sentence in the transcript, to read from there.'].join('\n')});
 }
@@ -83,6 +96,10 @@ function buildMenu(){
       {label:'&Open PDF…',accelerator:'CmdOrCtrl+O',click:async()=>{const f=await pickFile();if(!f)return;if(win&&rendererReady)win.webContents.send('open-file',f);else{pending=f;if(!win)createWindow()}}},
       ...(isMac?[{role:'recentDocuments',submenu:[{role:'clearRecentDocuments'}]}]:[]),
       {label:'&Close document',accelerator:'CmdOrCtrl+W',click:()=>{if(win)cmd('home')}},
+      {type:'separator'},
+      {label:'&Merge PDFs…',click:()=>cmd('tool:merge')},
+      {label:'&Images to PDF…',click:()=>cmd('tool:images')},
+      {label:'&Edit PDF…',accelerator:'CmdOrCtrl+E',click:()=>cmd('tool:edit')},
       ...(isMac?[]:[{type:'separator'},{label:'E&xit',accelerator:'Alt+F4',role:'quit'}])
     ]},
     ...(isMac?[{role:'editMenu'}]:[]),
@@ -125,15 +142,17 @@ function buildMenu(){
 }
 
 ipcMain.handle('pick-file',()=>pickFile());
+ipcMain.handle('save-pdf',(e,{name,data}={})=>savePdf(name,data).catch(err=>{dialog.showErrorBox('Could not save the PDF',err.message);return null}));
+ipcMain.on('show-in-folder',(e,p)=>{if(savedFiles.has(p))shell.showItemInFolder(p)});
 ipcMain.on('renderer-ready',()=>{rendererReady=true;if(pending&&win){win.webContents.send('open-file',pending);pending=null}});
 ipcMain.on('open-path',(e,p)=>{if(typeof p==='string'&&/\.pdf$/i.test(p))sendFile(p)});
 
 // macOS hands files over with this event (Finder "Open With", dropping on the Dock icon), sometimes before the app is ready
 app.on('open-file',(e,p)=>{e.preventDefault();if(app.isReady()&&!win)createWindow();sendFile(p)});
-app.on('second-instance',(e,argv)=>{const p=pdfFromArgs(argv);if(p)sendFile(p);else if(win){if(win.isMinimized())win.restore();win.focus()}});
+app.on('second-instance',(e,argv)=>{const p=pdfFromArgs(argv);if(p)sendFile(p,argv.includes('--edit'));else if(win){if(win.isMinimized())win.restore();win.focus()}});
 app.whenReady().then(()=>{
   buildMenu();if(!win)createWindow();
-  const p=pdfFromArgs(process.argv);if(p)sendFile(p);
+  const p=pdfFromArgs(process.argv);if(p)sendFile(p,process.argv.includes('--edit'));
 });
 // macOS apps stay in the Dock after the last window closes; clicking the Dock icon opens a new one
 app.on('activate',()=>{if(app.isReady()&&!win)createWindow()});

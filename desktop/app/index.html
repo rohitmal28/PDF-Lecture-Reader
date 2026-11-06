@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' data: blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PDF Lecture Reader</title>
+<link rel="stylesheet" href="tools.css">
 <style>
 @font-face{font-family:'Atkinson Hyperlegible';font-weight:400;font-style:normal;font-display:swap;src:url('fonts/atkinson-hyperlegible-latin-400-normal.woff2') format('woff2')}
 @font-face{font-family:'Atkinson Hyperlegible';font-weight:700;font-style:normal;font-display:swap;src:url('fonts/atkinson-hyperlegible-latin-700-normal.woff2') format('woff2')}
@@ -141,7 +142,7 @@ article p{margin:0 0 14px}
       <li>Click any word on the PDF, or any sentence in the transcript, to read from there.</li>
       <li>Drag the bar between the two panes to give the PDF more room. Zoom with <b>− / +</b>.</li>
       <li><b>Pace</b> sets the pauses between sentences and sections. <b>Speed</b> sets how fast the voice talks.</li>
-      <li id="howOpen">You can also right-click a PDF in File Explorer and choose <b>Read aloud with PDF Lecture Reader</b>.</li>
+      <li id="howOpen">You can also right-click a PDF in File Explorer and choose <b>Read aloud with PDF Lecture Reader</b>, or <b>Edit with PDF Lecture Reader</b>.</li>
       <li>Scanned PDFs without real text can be viewed but not read aloud.</li>
     </ol></div>
   </div>
@@ -470,7 +471,7 @@ function showErr(m){const e=$('err');e.textContent=m;e.hidden=!m}
 async function openFile(f){showErr('');try{openBuffer(await f.arrayBuffer(),f.name)}catch(e){showErr('The file could not be read. Try choosing it again.')}}
 
 /* ---------- state ---------- */
-let pdf=null,DOC=null,ST=null,FP='',cur=0,shownSec=-1;
+let pdf=null,DOC=null,ST=null,FP='',cur=0,shownSec=-1,CUR=null;
 const measureCtx=document.createElement('canvas').getContext('2d');
 const measure=(s,fs)=>{measureCtx.font=fs+'px sans-serif';return measureCtx.measureText(s).width};
 
@@ -481,7 +482,7 @@ async function openBuffer(buf,name,fromRecent){
     pdf=await pdfjsLib.getDocument({data:new Uint8Array(buf.slice(0)),isEvalSupported:false}).promise;
     FP=(pdf.fingerprints&&pdf.fingerprints[0])||name;
     DOC=await Core.extract(pdf,pdfjsLib,measure,async(i,n)=>{$('loadtxt').textContent=`Reading page ${i} of ${n}…`;$('loadbar').style.width=(i/n*100)+'%';if(i%4===0)await new Promise(r=>setTimeout(r))});
-    ST=Core.structure(DOC);
+    ST=Core.structure(DOC);CUR={buf,name};
     if(!fromRecent)remember(FP,name,buf);else DB.get(FP).then(r=>r&&DB.put(Object.assign(r,{opened:Date.now()}))).catch(()=>{});
     startApp(name);
   }catch(e){console.error(e);showErr(/password/i.test(e&&e.name||'')?'This PDF is password protected. Remove the password and try again.':'This file could not be opened as a PDF.')}
@@ -710,7 +711,10 @@ if(NATIVE){
   $('pick').onclick=e=>{e.stopPropagation();pickNative()};
   drop.onclick=()=>pickNative();
   drop.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pickNative()}};
-  NATIVE.onOpenFile(f=>openBuffer(toAB(f.data),f.name));
+  NATIVE.onOpenFile(f=>{
+    if(window.plrTools&&!window.plrTools.leave())return;
+    if(f.edit&&window.plrTools)window.plrTools.open('edit',{buf:toAB(f.data),name:f.name});else openBuffer(toAB(f.data),f.name);
+  });
   NATIVE.onCommand(c=>{
     if(c==='home'){if(!$('app').hidden)$('home').click();return}
     if($('app').hidden)return;
@@ -720,8 +724,13 @@ if(NATIVE){
   NATIVE.ready();
 }
 
+/* ---------- hooks for the PDF tools ---------- */
+window.plr={open:(buf,name)=>openBuffer(buf,name),showErr,isOpen:()=>!$('app').hidden,current:()=>CUR,stop};
+
 showRecent();
 })();
 </script>
+<script src="pdf-lib.min.js"></script>
+<script src="tools.js"></script>
 </body>
 </html>

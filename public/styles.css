@@ -139,7 +139,7 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,3.4vw,2.3re
 
 /* install: one column per system */
 .oscols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
-.oscol{border:1px solid var(--line);border-radius:var(--radius);background:var(--bg);padding:24px}
+.oscol{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:24px}
 .oscol.is-you{border-color:var(--accent)}
 .oscol h3{font-family:var(--display);font-size:1.3rem;margin:0 0 18px;display:flex;align-items:center;gap:10px}
 .oscol h3 .osicon{width:24px;height:24px}

@@ -4,8 +4,8 @@ The Electron app behind the Windows installer, now also set up for macOS.
 
 | Folder | What it is |
 |---|---|
-| `app/` | The app: `main.js` (window, menus, file opening), `preload.js`, `index.html` (the whole reader, with PDF.js inlined), fonts, icon |
-| `build/` | Build resources: the icon and the ad-hoc signing step for Mac |
+| `app/` | The app: `main.js` (window, menus, file opening, saving), `preload.js`, `index.html` (the whole reader, with PDF.js inlined), `tools.js` + `tools.css` (merge, images to PDF, editor), `pdf-lib.min.js`, fonts, icon |
+| `build/` | Build resources: the icon, the ad-hoc signing step for Mac, and `installer.nsh` (extra Windows installer steps) |
 | `resources/` | `LICENSE.txt` and `THIRD-PARTY-NOTICES.txt`, copied next to the app |
 
 ## Run it from source
@@ -16,6 +16,21 @@ npm start
 ```
 
 If the installed app is already open, close it first: only one copy runs at a time.
+
+## PDF tools
+
+`tools.js` adds Merge PDFs, Images to PDF and Edit a PDF. The same file (with `tools.css` and `pdf-lib.min.js`) is used by the browser extension, so copy it there when it changes. pdf.js shows the pages; [pdf-lib](https://pdf-lib.js.org) 1.17.1 writes the new PDF. In the app, File › Merge PDFs / Images to PDF / Edit PDF (Ctrl+E) open them, and the right-click menu in File Explorer has "Edit with PDF Lecture Reader" (starts the app with `--edit`).
+
+## Build the Windows installer
+
+On Windows:
+
+```
+npm ci
+npm run dist:win
+```
+
+This makes `dist/PDF-Lecture-Reader-Setup-<version>.exe`: license page, install just for you or for everyone, choice of folder, an extras page (desktop shortcut, right-click menu for PDFs), Start menu shortcut and uninstaller. It uses the Apps entry `PDFLectureReader`, so it installs over 1.0.0 and later versions. Copy the .exe into the website's `downloads` folder and add it to `releases.json`.
 
 ## Build the Mac version
 
